@@ -1,8 +1,8 @@
 <?php
-if (!class_exists('mcfwp_sticky_cart_settings')) {
-    $mcfwp_sticky_cart_options = get_option('mcfwp_sticky_cart_options');
+if (!class_exists('mcfw_sticky_cart_settings')) {
+    $mcfw_sticky_cart_options = get_option('mcfw_sticky_cart_options');
 
-    class mcfwp_sticky_cart_settings
+    class mcfw_sticky_cart_settings
     {
         public function __construct()
         {
@@ -11,10 +11,10 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
 
         public function register_cart_settings_init()
         { ?>
-            <form class="mcfwp-general-setting" action="options.php?tab=mcfwp-sticky-cart" method="post">
-                <?php settings_fields('mcfwp-sticky-setting-options');   ?>
-                <div class="mcfwp-section">
-                    <?php do_settings_sections('mcfwp_sticky_setting_section'); ?>
+            <form class="mcfw-general-setting" action="options.php?tab=mcfw-sticky-cart" method="post">
+                <?php settings_fields('mcfw-sticky-setting-options');   ?>
+                <div class="mcfw-section">
+                    <?php do_settings_sections('mcfw_sticky_setting_section'); ?>
                 </div>
                 <?php submit_button('Save Settings'); ?>
             </form>
@@ -24,21 +24,21 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
         /* register setting */
         public function register_sticky_cart_settings_init()
         {
-            register_setting('mcfwp-sticky-setting-options', 'mcfwp_sticky_cart_options', array($this, 'sanitize_settings'));
+            register_setting('mcfw-sticky-setting-options', 'mcfw_sticky_cart_options', array($this, 'sanitize_settings'));
 
             add_settings_section(
-                'mcfwp_sticky_setting_id',
-                __('', 'menu-cart-for-woocommerce-pro'),
+                'mcfw_sticky_setting_id',
+                __('', 'menu-cart-for-woocommerce'),
                 array(),
-                'mcfwp_sticky_setting_section'
+                'mcfw_sticky_setting_section'
             );
 
             add_settings_field(
                 'sticky_sidebar_cart_status',
-                __('Sticky Cart Button', 'menu-cart-for-woocommerce-pro'),
+                __('Sticky Cart Button', 'menu-cart-for-woocommerce'),
                 array($this, 'sticky_sidebar_cart_status_callback'),
-                'mcfwp_sticky_setting_section',
-                'mcfwp_sticky_setting_id',
+                'mcfw_sticky_setting_section',
+                'mcfw_sticky_setting_id',
                 [
                     'label_for'     => 'sticky_sidebar_cart_status',
                 ]
@@ -46,10 +46,10 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
 
             add_settings_field(
                 'item_count',
-                __('Display Item count', 'menu-cart-for-woocommerce-pro'),
+                __('Display Cart Item Count', 'menu-cart-for-woocommerce'),
                 array($this, 'item_count_callback'),
-                'mcfwp_sticky_setting_section',
-                'mcfwp_sticky_setting_id',
+                'mcfw_sticky_setting_section',
+                'mcfw_sticky_setting_id',
                 [
                     'label_for'     => 'item_count',
                 ]
@@ -57,10 +57,10 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
 
             add_settings_field(
                 'sticky_cart_position',
-                __('Sticky Cart position', 'menu-cart-for-woocommerce-pro'),
+                __("Sticky Cart Button's Position", 'menu-cart-for-woocommerce'),
                 array($this, 'sticky_cart_position_callback'),
-                'mcfwp_sticky_setting_section',
-                'mcfwp_sticky_setting_id',
+                'mcfw_sticky_setting_section',
+                'mcfw_sticky_setting_id',
                 [
                     'label_for'     => 'sticky_cart_position',
                 ]
@@ -68,10 +68,10 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
 
             add_settings_field(
                 'sticky_cart_btn_redirect',
-                __('Redirect to page', 'menu-cart-for-woocommerce-pro'),
+                __('Redirect To (When Click On Sticky Cart Button)', 'menu-cart-for-woocommerce'),
                 array($this, 'redirect_page_callback'),
-                'mcfwp_sticky_setting_section',
-                'mcfwp_sticky_setting_id',
+                'mcfw_sticky_setting_section',
+                'mcfw_sticky_setting_id',
                 [
                     'label_for'     => 'sticky_cart_btn_redirect',
                 ]
@@ -80,29 +80,29 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
 
         public function sticky_sidebar_cart_status_callback($args)
         {
-            global $mcfwp_sticky_cart_options;
-            $value = isset($mcfwp_sticky_cart_options[$args['label_for']]) ? $mcfwp_sticky_cart_options[$args['label_for']] : '';        ?>
-            <label class="mcfwp-switch">
-                <input type="checkbox" class="mcfwp-checkbox" name="mcfwp_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="on" <?php if ($value == 'on') {_e('checked', 'menu-cart-for-woocommerce-pro'); } ?>>
-                <span class="mcfwp-slider"></span>
+            global $mcfw_sticky_cart_options;
+            $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : '';        ?>
+            <label class="mcfw-switch">
+                <input type="checkbox" class="mcfw-checkbox" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="on" <?php if ($value == 'on') {_e('checked', 'menu-cart-for-woocommerce'); } ?>>
+                <span class="mcfw-slider"></span>
             </label>
         <?php
         }
 
         public function item_count_callback($args)
         {
-            global $mcfwp_sticky_cart_options;
-            $value = isset($mcfwp_sticky_cart_options[$args['label_for']]) ? $mcfwp_sticky_cart_options[$args['label_for']] : '';
+            global $mcfw_sticky_cart_options;
+            $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : '';
             $options = array(
                 'yes'   => 'Yes',
                 'no'    => 'No',
             ); ?>
-            <div class="mcfwp_price_wrap">
+            <div class="mcfw_price_wrap">
                 <?php
                 foreach ($options as $key => $values) { ?>
-                    <div class="mcfwp_price_main">
+                    <div class="mcfw_price_main">
                         <label>
-                        <input type="radio" name="mcfwp_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) {_e('checked', 'menu-cart-for-woocommerce-pro');} ?>><?php esc_attr_e($values); ?>
+                        <input type="radio" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) {_e('checked', 'menu-cart-for-woocommerce');} ?>><?php esc_attr_e($values); ?>
                         </label>
                     </div>
                 <?php } ?>
@@ -112,18 +112,18 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
 
         public function sticky_cart_position_callback($args)
         {
-            global $mcfwp_sticky_cart_options;
-            $value = isset($mcfwp_sticky_cart_options[$args['label_for']]) ? $mcfwp_sticky_cart_options[$args['label_for']] : '';
+            global $mcfw_sticky_cart_options;
+            $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : '';
             $options = array(
-                'mcfwp_cart_top_left'        => 'Top Left',
-                'mcfwp_cart_top_right'       => 'Top Right',
-                'mcfwp_cart_bottom_left'     => 'Bottom Left',
-                'mcfwp_cart_bottom_right'    => 'Bottom Right',
+                'mcfw_cart_top_left'        => 'Top Left',
+                'mcfw_cart_top_right'       => 'Top Right',
+                'mcfw_cart_bottom_left'     => 'Bottom Left',
+                'mcfw_cart_bottom_right'    => 'Bottom Right',
             ); ?>
-            <select name="mcfwp_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]">
+            <select name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]">
                 <?php
                 foreach ($options as $key => $values) { ?>
-                    <option value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('selected', 'menu-cart-for-woocommerce-pro'); } ?>><?php esc_attr_e($values); ?></option>
+                    <option value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('selected', 'menu-cart-for-woocommerce'); } ?>><?php esc_attr_e($values); ?></option>
                 <?php } ?>
             </select>
             <?php
@@ -131,19 +131,19 @@ if (!class_exists('mcfwp_sticky_cart_settings')) {
 
         public function redirect_page_callback($args){
 
-            global $mcfwp_sticky_cart_options;
-            $value = isset($mcfwp_sticky_cart_options[$args['label_for']]) ? $mcfwp_sticky_cart_options[$args['label_for']] : 'none';
+            global $mcfw_sticky_cart_options;
+            $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : 'none';
             $options = array(
                 'cart'      => 'Cart',
                 'checkout'  => 'Checkout',
                 'none'      => 'None',
             ); ?>
-            <div class="mcfwp_price_wrap">
+            <div class="mcfw_price_wrap">
                 <?php
                 foreach ($options as $key => $values) { ?>
-                    <div class="mcfwp_price_main">
+                    <div class="mcfw_price_main">
                        
-                        <label> <input type="radio" name="mcfwp_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked', 'menu-cart-for-woocommerce-pro'); } ?>><?php esc_attr_e($values); ?></label>
+                        <label> <input type="radio" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked', 'menu-cart-for-woocommerce'); } ?>><?php esc_attr_e($values); ?></label>
                     </div>
                 <?php } ?>
             </div>

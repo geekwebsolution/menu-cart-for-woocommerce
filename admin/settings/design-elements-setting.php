@@ -1,25 +1,25 @@
 <?php
-if (!class_exists('mcfwp_design_elements_settings')) {
-    $mcfwp_design_options = get_option('mcfwp_design_options');
+if (!class_exists('mcfw_design_elements_settings')) {
+    $mcfw_design_options = get_option('mcfw_design_options');
 
-    class mcfwp_design_elements_settings{
+    class mcfw_design_elements_settings{
         public function __construct(){       
             add_action('admin_init', array($this, 'register_design_elements_settings_init'));
         }
 
         public function design_elements_setting_form_option(){ ?>
-            <form class="mcfwp-design-setting" action="options.php?tab=mcfwp-design-elements" method="post">
-                <?php  settings_fields('mcfwp-design-setting-options');   ?>
-                <div class="mcfwp-section">
-                    <?php do_settings_sections('mcfwp_design_setting_section'); ?>
+            <form class="mcfw-design-setting" action="options.php?tab=mcfw-design-elements" method="post">
+                <?php  settings_fields('mcfw-design-setting-options');   ?>
+                <div class="mcfw-section">
+                    <?php do_settings_sections('mcfw_design_setting_section'); ?>
                 </div>
-                <div class="mcfwp-section">
-                    <?php do_settings_sections('mcfwp_flyout_design_setting_section'); ?>
+                <div class="mcfw-section">
+                    <?php do_settings_sections('mcfw_flyout_design_setting_section'); ?>
                 </div>
-                <div class="mcfwp-section">
-                    <?php do_settings_sections('mcfwp_sticky_cart_design_setting_section'); ?>
+                <div class="mcfw-section">
+                    <?php do_settings_sections('mcfw_sticky_cart_design_setting_section'); ?>
                 </div>
-                <div class="mcfwp_button_group">
+                <div class="mcfw_button_group">
                     <?php submit_button('Save Settings'); ?>
                     <input type="reset" value="Reset">
                 </div>
@@ -28,23 +28,23 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
         /* register setting */
         public function register_design_elements_settings_init(){
-            register_setting('mcfwp-design-setting-options', 'mcfwp_design_options', array($this, 'sanitize_settings'));
+            register_setting('mcfw-design-setting-options', 'mcfw_design_options', array($this, 'sanitize_settings'));
           
             add_settings_section(
-                'mcfwp_design_setting_id',
-                __('General', 'menu-cart-for-woocommerce-pro'),
+                'mcfw_design_setting_id',
+                __('General', 'menu-cart-for-woocommerce'),
                 array(),
-                'mcfwp_design_setting_section'
+                'mcfw_design_setting_section'
             );
 
 
 
             add_settings_field(
                 'currency_position',
-                __('Currency position', 'menu-cart-for-woocommerce-pro'),
+                __('Currency Position', 'menu-cart-for-woocommerce'),
                 array($this, 'currency_position_callback'),
-                'mcfwp_design_setting_section',
-                'mcfwp_design_setting_id',
+                'mcfw_design_setting_section',
+                'mcfw_design_setting_id',
                 [
                     'label_for'     => 'currency_position',
                 ]
@@ -52,10 +52,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'cart_color',
-                __('Cart Color', 'menu-cart-for-woocommerce-pro'),
+                __('Cart Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_design_setting_section',
-                'mcfwp_design_setting_id',
+                'mcfw_design_setting_section',
+                'mcfw_design_setting_id',
                 [
                     'label_for'     => 'cart_color',
                 ]
@@ -63,50 +63,39 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'menu_txt_color',
-                __('Menu Text Color', 'menu-cart-for-woocommerce-pro'),
+                __('Menu count Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_design_setting_section',
-                'mcfwp_design_setting_id',
+                'mcfw_design_setting_section',
+                'mcfw_design_setting_id',
                 [
                     'label_for'     => 'menu_txt_color',
                 ]
             );
 
             add_settings_field(
-                'menu_count_color',
-                __('Menu Count Color', 'menu-cart-for-woocommerce-pro'),
-                array($this, 'btns_color_picker_callback'),
-                'mcfwp_design_setting_section',
-                'mcfwp_design_setting_id',
-                [
-                    'label_for'     => 'menu_count_color',
-                ]
-            );
-
-            add_settings_field(
                 'menu_txt_background_color',
-                __('Menu count Background Color', 'menu-cart-for-woocommerce-pro'),
+                __('Menu count Background Color <span class="mcfw-pro">pro</span>', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_design_setting_section',
-                'mcfwp_design_setting_id',
+                'mcfw_design_setting_section',
+                'mcfw_design_setting_id',
                 [
                     'label_for'     => 'menu_txt_background_color',
                 ]
             );
 
             add_settings_section(
-                'mcfwp_flyout_design_setting_id',
-                __('Flyout', 'menu-cart-for-woocommerce-pro'),
+                'mcfw_flyout_design_setting_id',
+                __('Flyout', 'menu-cart-for-woocommerce'),
                 array(),
-                'mcfwp_flyout_design_setting_section'
+                'mcfw_flyout_design_setting_section'
             );
 
             add_settings_field(
                 'flyout_background_color',
-                __('Flyout Background Color', 'menu-cart-for-woocommerce-pro'),
+                __('Flyout Background Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_flyout_design_setting_section',
-                'mcfwp_flyout_design_setting_id',
+                'mcfw_flyout_design_setting_section',
+                'mcfw_flyout_design_setting_id',
                 [
                     'label_for'     => 'flyout_background_color',
                 ]
@@ -114,10 +103,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'txt_color',
-                __('Text Color', 'menu-cart-for-woocommerce-pro'),
+                __('Text Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_flyout_design_setting_section',
-                'mcfwp_flyout_design_setting_id',
+                'mcfw_flyout_design_setting_section',
+                'mcfw_flyout_design_setting_id',
                 [
                     'label_for'     => 'txt_color',
                 ]
@@ -125,10 +114,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'btns_background_color',
-                __('Button Background Color', 'menu-cart-for-woocommerce-pro'),
+                __('Button Background Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_flyout_design_setting_section',
-                'mcfwp_flyout_design_setting_id',
+                'mcfw_flyout_design_setting_section',
+                'mcfw_flyout_design_setting_id',
                 [
                     'label_for'     => 'btns_background_color',
                 ]
@@ -136,10 +125,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'btns_text_color',
-                __('Button Text Colour', 'menu-cart-for-woocommerce-pro'),
+                __('Button Text Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_flyout_design_setting_section',
-                'mcfwp_flyout_design_setting_id',
+                'mcfw_flyout_design_setting_section',
+                'mcfw_flyout_design_setting_id',
                 [
                     'label_for'     => 'btns_text_color',
                 ]
@@ -147,10 +136,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'btns_hover_background_color',
-                __('Button Hover Background Color', 'menu-cart-for-woocommerce-pro'),
+                __('Button Hover Background Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_flyout_design_setting_section',
-                'mcfwp_flyout_design_setting_id',
+                'mcfw_flyout_design_setting_section',
+                'mcfw_flyout_design_setting_id',
                 [
                     'label_for'     => 'btns_hover_background_color',
                 ]
@@ -158,10 +147,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'btns_hover_text_color',
-                __('Button Hove Text Colour', 'menu-cart-for-woocommerce-pro'),
+                __('Button Hover Text Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_flyout_design_setting_section',
-                'mcfwp_flyout_design_setting_id',
+                'mcfw_flyout_design_setting_section',
+                'mcfw_flyout_design_setting_id',
                 [
                     'label_for'     => 'btns_hover_text_color',
                 ]
@@ -169,28 +158,28 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'btns_border',
-                __('Button Border', 'menu-cart-for-woocommerce-pro'),
+                __('Button Border', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_border_callback'),
-                'mcfwp_flyout_design_setting_section',
-                'mcfwp_flyout_design_setting_id',
+                'mcfw_flyout_design_setting_section',
+                'mcfw_flyout_design_setting_id',
                 [
                     'label_for'     => 'btns_border',
                 ]
             );
 
             add_settings_section(
-                'mcfwp_sticky_cart_design_setting_id',
-                __('Sticky Cart', 'menu-cart-for-woocommerce-pro'),
+                'mcfw_sticky_cart_design_setting_id',
+                __('Sticky Cart', 'menu-cart-for-woocommerce'),
                 array(),
-                'mcfwp_sticky_cart_design_setting_section'
+                'mcfw_sticky_cart_design_setting_section'
             );
             
             add_settings_field(
                 'count_text_color',
-                __('Count Color', 'menu-cart-for-woocommerce-pro'),
+                __('Counter Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_sticky_cart_design_setting_section',
-                'mcfwp_sticky_cart_design_setting_id',
+                'mcfw_sticky_cart_design_setting_section',
+                'mcfw_sticky_cart_design_setting_id',
                 [
                     'label_for'     => 'count_text_color',
                 ]
@@ -198,10 +187,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'count_background_color',
-                __('Count Background Color', 'menu-cart-for-woocommerce-pro'),
+                __('Counter Background Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_sticky_cart_design_setting_section',
-                'mcfwp_sticky_cart_design_setting_id',
+                'mcfw_sticky_cart_design_setting_section',
+                'mcfw_sticky_cart_design_setting_id',
                 [
                     'label_for'     => 'count_background_color',
                 ]
@@ -209,10 +198,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             add_settings_field(
                 'cart_background_color',
-                __('Cart Background Color', 'menu-cart-for-woocommerce-pro'),
+                __('Cart Background Color', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
-                'mcfwp_sticky_cart_design_setting_section',
-                'mcfwp_sticky_cart_design_setting_id',
+                'mcfw_sticky_cart_design_setting_section',
+                'mcfw_sticky_cart_design_setting_id',
                 [
                     'label_for'     => 'cart_background_color',
                 ]
@@ -220,10 +209,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
             
             add_settings_field(
                 'cart_shape',
-                __('Shape', 'menu-cart-for-woocommerce-pro'),
+                __('Shape', 'menu-cart-for-woocommerce'),
                 array($this, 'cart_shape_callback'),
-                'mcfwp_sticky_cart_design_setting_section',
-                'mcfwp_sticky_cart_design_setting_id',
+                'mcfw_sticky_cart_design_setting_section',
+                'mcfw_sticky_cart_design_setting_id',
                 [
                     'label_for'     => 'cart_shape',
                 ]
@@ -233,15 +222,15 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
 
         public function currency_position_callback($args){
-            global $mcfwp_design_options;
-            $value = isset($mcfwp_design_options[$args['label_for']]) ? $mcfwp_design_options[$args['label_for']] : ''; 
+            global $mcfw_design_options;
+            $value = isset($mcfw_design_options[$args['label_for']]) ? $mcfw_design_options[$args['label_for']] : ''; 
             $options=array(
-                'mcfwp_currency_postion_left'          => 'Left',
-                'mcfwp_currency_postion_right'		 => 'Right' ,
-                'mcfwp_currency_postion_left_withspace'		 => 'Left With Space' ,
-                'mcfwp_currency_postion_right_withspace'		 => 'Right With Space' ,
+                'mcfw_currency_postion_left'          => 'Left',
+                'mcfw_currency_postion_right'		 => 'Right' ,
+                'mcfw_currency_postion_left_withspace'		 => 'Left With Space' ,
+                'mcfw_currency_postion_right_withspace'		 => 'Right With Space' ,
             ); ?>
-                <select class="mcfwp-currency-position-select" name="mcfwp_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]" >
+                <select class="mcfw-currency-position-select" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]" >
                 <?php
                     foreach ($options as $key => $values) { ?>
                         <option value="<?php esc_attr_e($key); ?>" <?php if ($key==$value) { _e('selected'); } ?>><?php esc_attr_e($values); ?></option>
@@ -252,20 +241,20 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
 
         public function btns_color_picker_callback($args){
-            global $mcfwp_design_options;
-            $value = isset($mcfwp_design_options[$args['label_for']]) ? $mcfwp_design_options[$args['label_for']] : ''; ?>
+            global $mcfw_design_options;
+            $value = isset($mcfw_design_options[$args['label_for']]) ? $mcfw_design_options[$args['label_for']] : ''; ?>
 
 
 
-                <input type="text" class="mcfwp_coloris" name="mcfwp_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php _e($value); ?>" />
+                <input type="text" class="mcfw_coloris" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php _e($value); ?>" />
         
         
             <?php
         }
 
         public function btns_border_callback($args){
-            global $mcfwp_design_options;
-            $value = isset($mcfwp_design_options[$args['label_for']]) ? explode(",",$mcfwp_design_options[$args['label_for']]) : ''; 
+            global $mcfw_design_options;
+            $value = isset($mcfw_design_options[$args['label_for']]) ? explode(",",$mcfw_design_options[$args['label_for']]) : ''; 
             $options = array(
                 'dotted',
                 'dashed',
@@ -277,40 +266,40 @@ if (!class_exists('mcfwp_design_elements_settings')) {
                 'outset',
                 'none',
             ); ?>
-            <div class="mcfwp-border-options">
+            <div class="mcfw-border-options">
 
-                <div class="mcfwp-border-number">
-                    <input type="number" name="mcfwp_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]['px']" min="1" value="<?php esc_attr_e($value[0]); ?>">
-                    <p class="mcfwp-input-note"><?php _e('This field represents <strong>WIDTH</strong> of the border','menu-cart-for-woocommerce-pro'); ?></p>
+                <div class="mcfw-border-number">
+                    <input type="number" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]['px']" min="1" value="<?php esc_attr_e($value[0]); ?>">
+                    <p class="mcfw-input-note"><?php _e('This field represents <strong>WIDTH</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
 
-                <div class="mcfwp-border-style">
-                    <select class="mcfwp-border-style-select" name="mcfwp_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]['style']" value="<?php esc_attr_e($value[1]); ?>">
+                <div class="mcfw-border-style">
+                    <select class="mcfw-border-style-select" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]['style']" value="<?php esc_attr_e($value[1]); ?>">
                     <?php
                         foreach ($options as $key => $values) { ?>
                             <option value="<?php esc_attr_e($values); ?>" <?php if ($values==$value[1]) { _e('selected'); } ?>><?php esc_attr_e($values); ?></option>
                     <?php } ?>
                     </select>
-                    <p class="mcfwp-input-note"><?php _e('This field represents <strong>STYLE</strong> of the border','menu-cart-for-woocommerce-pro'); ?></p>
+                    <p class="mcfw-input-note"><?php _e('This field represents <strong>STYLE</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
                 
-                <div class="mcfwp-border-color">
+                <div class="mcfw-border-color">
 
-                    <input type="text" class="mcfwp_coloris" name="mcfwp_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]['color']" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php esc_attr_e($value[2]); ?>" >
-                    <p class="mcfwp-input-note"><?php _e('This field represents <strong>COLOR</strong> of the border','menu-cart-for-woocommerce-pro'); ?></p>
+                    <input type="text" class="mcfw_coloris" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]['color']" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php esc_attr_e($value[2]); ?>" >
+                    <p class="mcfw-input-note"><?php _e('This field represents <strong>COLOR</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
             </div>
             <?php
         }
 
         public function cart_shape_callback($args){
-            global $mcfwp_design_options;
-            $value = isset($mcfwp_design_options[$args['label_for']]) ? $mcfwp_design_options[$args['label_for']] : ''; 
+            global $mcfw_design_options;
+            $value = isset($mcfw_design_options[$args['label_for']]) ? $mcfw_design_options[$args['label_for']] : ''; 
             $options=array(
-                'mcfwp_round_cart'          => 'Round',
-                'mcfwp_square_cart'		 => 'Square' ,
+                'mcfw_round_cart'          => 'Round',
+                'mcfw_square_cart'		 => 'Square' ,
             ); ?>
-                <select class="mcfwp-sticky-cart-shape" name="mcfwp_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]" >
+                <select class="mcfw-sticky-cart-shape" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]" >
                 <?php
                     foreach ($options as $key => $values) { ?>
                         <option value="<?php esc_attr_e($key); ?>" <?php if ($key==$value) { _e('selected'); } ?>><?php esc_attr_e($values); ?></option>
@@ -320,6 +309,10 @@ if (!class_exists('mcfwp_design_elements_settings')) {
         }
         public function sanitize_settings($input){
             $new_input = array();
+
+            // print_r($input);
+
+            // die;
 
             if (isset($input['currency_position']) && !empty($input['currency_position'])) {
                 $new_input['currency_position']=sanitize_text_field($input['currency_position']);
@@ -331,14 +324,6 @@ if (!class_exists('mcfwp_design_elements_settings')) {
 
             if (isset($input['menu_txt_color']) && !empty($input['menu_txt_color'])) {
                 $new_input['menu_txt_color']=sanitize_text_field($input['menu_txt_color']);
-            }
-
-            if (isset($input['menu_count_color']) && !empty($input['menu_count_color'])) {
-                $new_input['menu_count_color']=sanitize_text_field($input['menu_count_color']);
-            }
-
-            if (isset($input['menu_txt_background_color']) && !empty($input['menu_txt_background_color'])) {
-                $new_input['menu_txt_background_color']=sanitize_text_field($input['menu_txt_background_color']);
             }
 
             if (isset($input['flyout_background_color']) && !empty($input['flyout_background_color'])) {

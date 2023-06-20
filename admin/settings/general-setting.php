@@ -1,26 +1,24 @@
 <?php
-if (!class_exists('mcfwp_general_settings')) {
-    $mcfwp_general_options = get_option('mcfwp_general_options');
+if (!class_exists('mcfw_general_settings')) {
+    $mcfw_general_options = get_option('mcfw_general_options');
 
-    class mcfwp_general_settings
+    class mcfw_general_settings
     {
-        public function __construct()
-        {
+        public function __construct(){
             add_action('admin_init', array($this, 'register_general_settings_init'));
         }
 
-        public function register_settings_init()
-        { ?>
-            <form action="options.php" method="post" class="mcfwp-general-setting">
-                <?php settings_fields('mcfwp-general-setting-options');   ?>
-                <div class="mcfwp-section">
+        public function register_settings_init(){ ?>
+            <form action="options.php" method="post" class="mcfw-general-setting">
+                <?php settings_fields('mcfw-general-setting-options');   ?>
+                <div class="mcfw-section">
                     <?php
                     if (empty(wp_get_nav_menus())) { ?>
-                        <div class="error mcfwp-input-note mcfwp-error" >
-                            <?php _e('You need to create a menu before you can use Menu Cart. Go to <strong>Appearence > Menus</strong> and create menu to add the cart to.', 'menu-cart-for-woocommerce-pro'); ?>
+                        <div class="error mcfw-input-note mcfw-error" >
+                            <?php _e('You need to create a menu before you can use Menu Cart. Go to <strong>Appearence > Menus</strong> and create menu to add the cart to.', 'menu-cart-for-woocommerce'); ?>
                         </div>
                     <?php } ?>
-                    <?php do_settings_sections('mcfwp_general_setting_section'); ?>
+                    <?php do_settings_sections('mcfw_general_setting_section'); ?>
                 </div>
                 <?php submit_button('Save Settings'); ?>
             </form>
@@ -28,23 +26,22 @@ if (!class_exists('mcfwp_general_settings')) {
         }
 
         /* register setting */
-        public function register_general_settings_init()
-        {
-            register_setting('mcfwp-general-setting-options', 'mcfwp_general_options', array($this, 'sanitize_settings'));
+        public function register_general_settings_init(){
+            register_setting('mcfw-general-setting-options', 'mcfw_general_options', array($this, 'sanitize_settings'));
 
             add_settings_section(
-                'mcfwp_general_setting_id',
-                __('', 'menu-cart-for-woocommerce-pro'),
+                'mcfw_general_setting_id',
+                __('', 'menu-cart-for-woocommerce'),
                 array(),
-                'mcfwp_general_setting_section'
+                'mcfw_general_setting_section'
             );
 
             add_settings_field(
                 'menu_id',
-                __('Select the menu(s) in which you want to display the Menu Cart', 'menu-cart-for-woocommerce-pro'),
+                __('Select The Menu(s) In Which You Want To Display The Cart Menu Item', 'menu-cart-for-woocommerce'),
                 array($this, 'menus_callback'),
-                'mcfwp_general_setting_section',
-                'mcfwp_general_setting_id',
+                'mcfw_general_setting_section',
+                'mcfw_general_setting_id',
                 [
                     'label_for'     => 'menu_id',
                 ]
@@ -52,10 +49,10 @@ if (!class_exists('mcfwp_general_settings')) {
 
             add_settings_field(
                 'always_display',
-                __("Always display cart, even if it's empty", 'menu-cart-for-woocommerce-pro'),
+                __("Always Display The Cart Menu Item, Even If It's Empty", 'menu-cart-for-woocommerce'),
                 array($this, 'checkbox_element_callback'),
-                'mcfwp_general_setting_section',
-                'mcfwp_general_setting_id',
+                'mcfw_general_setting_section',
+                'mcfw_general_setting_id',
                 [
                     'label_for'     => 'always_display',
                 ]
@@ -63,10 +60,10 @@ if (!class_exists('mcfwp_general_settings')) {
 
             add_settings_field(
                 'show_on_cart_checkout_page',
-                __("</label> <label for='show_on_cart_checkout_page' >Show on cart & checkout page</label> <p>To avoid distracting your customers with duplicate information we do not display the menu cart item on the cart & checkout pages by default</p><label>", 'menu-cart-for-woocommerce-pro'),
+                __("</label> <label for='show_on_cart_checkout_page' >Show On Cart & Checkout Page</label> <p>To avoid distracting your customers with duplicate information we do not display the menu cart item on the cart & checkout pages by default.</p><label>", 'menu-cart-for-woocommerce'),
                 array($this, 'checkbox_element_callback'),
-                'mcfwp_general_setting_section',
-                'mcfwp_general_setting_id',
+                'mcfw_general_setting_section',
+                'mcfw_general_setting_id',
                 [
                     'label_for'     => 'show_on_cart_checkout_page',
                     'description'    => '',
@@ -75,10 +72,10 @@ if (!class_exists('mcfwp_general_settings')) {
 
             add_settings_field(
                 'price_format',
-                __("How prices are displayed on the frontend", 'menu-cart-for-woocommerce-pro'),
+                __("How Prices Are Displayed In The Flyout", 'menu-cart-for-woocommerce'),
                 array($this, 'price_format_callback'),
-                'mcfwp_general_setting_section',
-                'mcfwp_general_setting_id',
+                'mcfw_general_setting_section',
+                'mcfw_general_setting_id',
                 [
                     'label_for'     => 'price_format',
                 ]
@@ -88,10 +85,10 @@ if (!class_exists('mcfwp_general_settings')) {
 
             add_settings_field(
                 'cart_icon',
-                __("Choose a cart icon", 'menu-cart-for-woocommerce-pro'),
+                __("Choose A Cart Icon", 'menu-cart-for-woocommerce'),
                 array($this, 'menu_cart_icon_callback'),
-                'mcfwp_general_setting_section',
-                'mcfwp_general_setting_id',
+                'mcfw_general_setting_section',
+                'mcfw_general_setting_id',
                 [
                     'label_for'     => 'cart_icon',
                 ]
@@ -99,10 +96,10 @@ if (!class_exists('mcfwp_general_settings')) {
 
             add_settings_field(
                 'menu_cart_formats',
-                __("How would you like to display in the menu ?", 'menu-cart-for-woocommerce-pro'),
+                __("How Would You Like To Display A Menu Item In The Menu?", 'menu-cart-for-woocommerce'),
                 array($this, 'menu_cart_formats_callback'),
-                'mcfwp_general_setting_section',
-                'mcfwp_general_setting_id',
+                'mcfw_general_setting_section',
+                'mcfw_general_setting_id',
                 [
                     'label_for'     => 'menu_cart_formats',
                 ]
@@ -110,69 +107,68 @@ if (!class_exists('mcfwp_general_settings')) {
 
             add_settings_field(
                 'page_redirect',
-                __("Redirect to cart page or checkout page (when click on menu) ", 'menu-cart-for-woocommerce-pro'),
+                __("Redirect To Cart Page Or Checkout Page (When Click On Menu Item)", 'menu-cart-for-woocommerce'),
                 array($this, 'redirect_page_callback'),
-                'mcfwp_general_setting_section',
-                'mcfwp_general_setting_id',
+                'mcfw_general_setting_section',
+                'mcfw_general_setting_id',
                 [
                     'label_for'     => 'page_redirect',
                 ]
             );
         }
 
-        public function menus_callback($args)
-        {
-            global $mcfwp_general_options;
-            $value = isset($mcfwp_general_options[$args['label_for']]) ? explode(",", $mcfwp_general_options[$args['label_for']]) : '';
-            $mcfwp_menus = wp_get_nav_menus();
+        public function menus_callback($args){
+            global $mcfw_general_options;
+            $value = isset($mcfw_general_options[$args['label_for']]) ? explode(",", $mcfw_general_options[$args['label_for']]) : '';
+            $mcfw_menus = wp_get_nav_menus();
         ?>
-            <select name="mcfwp_general_options[<?php esc_attr_e($args['label_for']);  ?>][]" class="mcfwp-select js-select2-multi" multiple="multiple">
+            <select name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>][]" class="mcfw-select js-select2-multi" multiple="multiple">
                 <option value="" disabled></option>
                 <?php
-                if (isset($mcfwp_menus) && !empty($mcfwp_menus)) {
-                    foreach ($mcfwp_menus as $key => $values) {  ?>
-                        <option value="<?php esc_attr_e($values->term_id) ?>" <?php if (isset($value) && (!empty($value)) && (in_array($values->term_id, $value))) { _e('selected', 'menu-cart-for-woocommerce-pro');} ?>>
+                if (isset($mcfw_menus) && !empty($mcfw_menus)) {
+                    foreach ($mcfw_menus as $key => $values) {  ?>
+                        <option value="<?php esc_attr_e($values->term_id) ?>" <?php if (isset($value) && (!empty($value)) && (in_array($values->term_id, $value))) { _e('selected', 'menu-cart-for-woocommerce');} ?>>
                             <?php esc_attr_e($values->name); ?></option>
                 <?php }
                 } ?>
             </select>
-            <p class="mcfwp-select-err mcfwp-input-note">
-                <?php _e('Below options will be ineffective if not select any menu.', 'menu-cart-for-woocommerce-pro'); ?></p>
+            <p class="mcfw-select-err mcfw-input-note">
+                <?php _e('The below options will be ineffective if not select any menu.', 'menu-cart-for-woocommerce'); ?></p>
         <?php
         }
 
-        public function checkbox_element_callback($args)
-        {
-            global $mcfwp_general_options;
-            $value = isset($mcfwp_general_options[$args['label_for']]) ? $mcfwp_general_options[$args['label_for']] : ''; ?>
-            <label class="mcfwp-switch">
-                <input type="checkbox" class="mcfwp-checkbox" name="mcfwp_general_options[<?php esc_attr_e($args['label_for']);  ?>]" <?php if ($value == "on") { _e('checked', 'menu-cart-for-woocommerce-pro');} ?>>
-                <span class="mcfwp-slider"></span>
+        public function checkbox_element_callback($args){
+
+            global $mcfw_general_options;
+            $value = isset($mcfw_general_options[$args['label_for']]) ? $mcfw_general_options[$args['label_for']] : ''; ?>
+            <label class="mcfw-switch">
+                <input type="checkbox" class="mcfw-checkbox" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" <?php if ($value == "on") { _e('checked', 'menu-cart-for-woocommerce');} ?>>
+                <span class="mcfw-slider"></span>
             </label>
             <?php
-            if (!empty($args['description'])) { ?> <p class="mcfwp-input-note">
-                    <?php esc_attr_e($args['description'], 'menu-cart-for-woocommerce-pro') ?></p>
+            if (!empty($args['description'])) { ?> <p class="mcfw-input-note">
+                    <?php esc_attr_e($args['description'], 'menu-cart-for-woocommerce') ?></p>
             <?php }
         }
 
-        public function price_format_callback($args)
-        {
-            global $mcfwp_general_options;
-            $value = isset($mcfwp_general_options[$args['label_for']]) ? $mcfwp_general_options[$args['label_for']] : '';
+        public function price_format_callback($args){
+
+            global $mcfw_general_options;
+            $value = isset($mcfw_general_options[$args['label_for']]) ? $mcfw_general_options[$args['label_for']] : '';
             ?>
-            <div class="mcfwp_price_wrap currency_price">
-                <div class="mcfwp_price_main currency_price">
-                    <input type="radio" id="Currency" name="mcfwp_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="currency" <?php if ($value == 'currency') { _e('checked', 'menu-cart-for-woocommerce-pro'); } ?>>
-                    <div class="mcfwp-input-note-wp">
-                        <label for="Currency"><?php _e('Currency', 'menu-cart-for-woocommerce-pro'); ?></label>
-                        <span class="mcfwp-input-note"><?php _e('e.g. USD', 'menu-cart-for-woocommerce-pro'); ?></span>
+            <div class="mcfw_price_wrap currency_price">
+                <div class="mcfw_price_main currency_price">
+                    <input type="radio" id="Currency" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="currency" <?php if ($value == 'currency') { _e('checked', 'menu-cart-for-woocommerce'); } ?>>
+                    <div class="mcfw-input-note-wp">
+                        <label for="Currency"><?php _e('Currency', 'menu-cart-for-woocommerce'); ?></label>
+                        <span class="mcfw-input-note"><?php _e('e.g. USD', 'menu-cart-for-woocommerce'); ?></span>
                     </div>
                 </div>
-                <div class="mcfwp_price_main currency_symbol_price">
-                    <input type="radio" id="Currency Symbol" name="mcfwp_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="currency_symbol" <?php if ($value == 'currency_symbol') { _e('checked'); } ?>>
-                    <div class="mcfwp-input-note-wp">
-                        <label for="Currency Symbol"><?php _e('Currency Symbol', 'menu-cart-for-woocommerce-pro'); ?></label>
-                        <span class="mcfwp-input-note"><?php _e('e.g. $', 'menu-cart-for-woocommerce-pro'); ?></span>
+                <div class="mcfw_price_main currency_symbol_price">
+                    <input type="radio" id="Currency Symbol" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="currency_symbol" <?php if ($value == 'currency_symbol') { _e('checked'); } ?>>
+                    <div class="mcfw-input-note-wp">
+                        <label for="Currency Symbol"><?php _e('Currency Symbol', 'menu-cart-for-woocommerce'); ?></label>
+                        <span class="mcfw-input-note"><?php _e('e.g. $', 'menu-cart-for-woocommerce'); ?></span>
                     </div>
                 </div>
             </div>
@@ -181,64 +177,84 @@ if (!class_exists('mcfwp_general_settings')) {
 
         
 
-        public function menu_cart_icon_callback($args)
-        {
-            global $mcfwp_general_options;
-            $value = isset($mcfwp_general_options[$args['label_for']]) ? $mcfwp_general_options[$args['label_for']] : '';
-            $options = array('cart1','cart2','cart3','cart4','cart5','cart6','cart7','cart8','cart9','cart10'); ?>
-            <div class="mcfwp-cart-options-wp">
+        public function menu_cart_icon_callback($args){
+
+            global $mcfw_general_options;
+            $value = isset($mcfw_general_options[$args['label_for']]) ? $mcfw_general_options[$args['label_for']] : '';
+            $options = array('cart1','cart10','cart4');
+            $pro_options = array('cart2','cart3','cart5','cart6','cart7','cart8','cart9'); ?>
+            <div class="mcfw-cart-options-wp">
                 <?php
                 foreach ($options as $key => $values) {
-                    $icons = esc_url(MCFWP_PLUGIN_URL . '/assets/images/menu_icons/' . $values . '.png'); ?>
+                    $icons = esc_url(MCFW_PLUGIN_URL . '/assets/images/menu_icons/' . $values . '.png'); ?>
 
-                    <div class="mcfwp-cart-options <?php esc_html_e(($values == $value) ? 'mcfwp-current-cart-options' : ''); ?>">
-                        <input type="radio" name="mcfwp_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($values); ?>" <?php if ($values == $value) {_e('checked');} ?>>
+                    <div class="mcfw-cart-options <?php esc_html_e(($values == $value) ? 'mcfw-current-cart-options' : ''); ?>">
+                        <input type="radio" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($values); ?>" <?php if ($values == $value) {_e('checked');} ?>>
                         <img src="<?php esc_attr_e($icons); ?>" width="35" height="35" alt="<?php esc_attr_e($values); ?> cart icon">
+                    </div>
+                <?php } 
+                 foreach ($pro_options as $key => $values) {
+                    $icons = esc_url(MCFW_PLUGIN_URL . '/assets/images/menu_icons/' . $values . '.png'); ?>
+
+                    <div class="mcfw-cart-options mcfw-pro-disabled mcfw-cart-disabled <?php esc_html_e(($values == $value) ? 'mcfw-current-cart-options' : ''); ?>">
+                        <input type="radio"  >
+                        <img src="<?php esc_attr_e($icons); ?>" width="35" height="35" alt="<?php esc_attr_e($values); ?> cart icon">
+                    </div>
+                <?php }
+                ?>
+            </div>
+  
+            <span class="mcfw-pro-icon"><i><?php _e('Additional icons are only available in') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.') ?></a></i></span>
+            <?php
+        }
+
+        public function menu_cart_formats_callback($args){
+
+            global $mcfw_general_options;
+            $value = isset($mcfw_general_options[$args['label_for']]) ? $mcfw_general_options[$args['label_for']] : '';
+            $options = array('icon_only','icon_items','icon_price'); 
+            $options_pro = array('items_price','price_items','icon_items_price','icon_price_items','icon_item_count'); ?>
+            <div class="mcfw-cart-btn-img-wp">
+                <?php
+                foreach ($options as $key => $values) {
+                    $icons = esc_url(MCFW_PLUGIN_URL . '/assets/images/menu_cart_formats/' . $values . '.png'); ?>
+                    <div class="mcfw-cart-btn-img <?php esc_html_e(($values == $value) ? 'mcfw-current-cart-options' : ''); ?>">
+                        <input type="radio" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($values); ?>" <?php if ($values == $value) {_e('checked', 'menu-cart-for-woocommerce');} ?>>
+                        <img src="<?php esc_attr_e($icons); ?>" alt="<?php esc_attr_e($values); ?> cart button image">
+                    </div>
+
+                <?php }
+                foreach ($options_pro as $key => $values) {
+                    $icons = esc_url(MCFW_PLUGIN_URL . '/assets/images/menu_cart_formats/' . $values . '.png'); ?>
+                    <div class="mcfw-cart-btn-img mcfw-pro-disabled mcfw-menu-design-disabled <?php esc_html_e(($values == $value) ? 'mcfw-current-cart-options' : ''); ?>">
+                        <input type="radio" >
+                        <img src="<?php esc_attr_e($icons); ?>" alt="<?php esc_attr_e($values); ?> cart button image">
+                    </div>
+                <?php }
+                
+                ?>
+            </div> 
+            <span class="mcfw-pro-icon"><i><?php _e('Additional design layouts are only available in') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.') ?></a></i></span>
+            <?php
+        }
+
+        public function redirect_page_callback($args){
+
+            global $mcfw_general_options;
+            $value = isset($mcfw_general_options[$args['label_for']]) ? $mcfw_general_options[$args['label_for']] : '';
+            $options = array('cart'=> 'Cart','checkout'=> 'Checkout',); ?>
+            <div class="mcfw_price_wrap">
+                <?php
+                foreach ($options as $key => $values) { ?>
+                    <div class="mcfw_price_main">                        
+                        <label><input type="radio" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked', 'menu-cart-for-woocommerce'); } ?>><?php esc_attr_e($values); ?></label>
                     </div>
                 <?php } ?>
             </div>
             <?php
         }
 
-        public function menu_cart_formats_callback($args)
-        {
-            global $mcfwp_general_options;
-            $value = isset($mcfwp_general_options[$args['label_for']]) ? $mcfwp_general_options[$args['label_for']] : '';
-            $options = array('icon_only', 'icon_items','icon_price','items_price','price_items','icon_items_price','icon_price_items','icon_item_count'); ?>
-            <div class="mcfwp-cart-btn-img-wp">
-                <?php
-                foreach ($options as $key => $values) {
-                    $icons = esc_url(MCFWP_PLUGIN_URL . '/assets/images/menu_cart_formats/' . $values . '.png'); ?>
-                    <div class="mcfwp-cart-btn-img <?php esc_html_e(($values == $value) ? 'mcfwp-current-cart-options' : ''); ?>">
-                        <input type="radio" name="mcfwp_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($values); ?>" <?php if ($values == $value) {_e('checked', 'menu-cart-for-woocommerce-pro');} ?>>
-                        <img src="<?php esc_attr_e($icons); ?>" alt="<?php esc_attr_e($values); ?> cart button image">
-                    </div>
-                <?php } ?>
-            </div> <?php
-        }
-
-        public function redirect_page_callback($args)
-        {
-            global $mcfwp_general_options;
-            $value = isset($mcfwp_general_options[$args['label_for']]) ? $mcfwp_general_options[$args['label_for']] : '';
-            $options = array(
-                'cart'          => 'Cart',
-                'checkout'         => 'Checkout',
-            ); ?>
-            <div class="mcfwp_price_wrap">
-                <?php
-                foreach ($options as $key => $values) { ?>
-                    <div class="mcfwp_price_main">
-                        
-                        <label><input type="radio" name="mcfwp_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked', 'menu-cart-for-woocommerce-pro'); } ?>><?php esc_attr_e($values); ?></label>
-                    </div>
-                <?php } ?>
-            </div>
-<?php
-        }
-
-        public function sanitize_settings($input)
-        {
+        public function sanitize_settings($input){
             $new_input = array();
 
             if (isset($input['menu_id']) && !empty($input['menu_id'])) {

@@ -33,89 +33,66 @@ jQuery(document).ready(function ($) {
     jQuery(document.body).on("wc_cart_emptied", empty_cart);
 
     function empty_cart(params) {
-        if (mcfwpObj.general_data["always_display"] != "on") {
-            jQuery(".mcfwp-menu").hide();
+        if (mcfwObj.general_data["always_display"] != "on") {
+            jQuery(".mcfw-menu").hide();
         }
     }
     jQuery("body").on("added_to_cart", function () {
-        jQuery(".mcfwp-menu").show();
+        jQuery(".mcfw-menu").show();
     });
 
     /** Main Menu click to show falyout  */
-    jQuery("body").on("click", ".mcfwp-menu .mcfwp-menu-list", function () {
-        jQuery(this).closest(".mcfwp-menu").toggleClass("mcfwp-menu-show");
-        const fullHeight = jQuery(document).scrollTop() + window.innerHeight - jQuery(".mcfwp-mini-cart-main").height();
+    jQuery("body").on("click", ".mcfw-menu .mcfw-menu-list", function () {
+        jQuery(this).closest(".mcfw-menu").toggleClass("mcfw-menu-show");
+        const fullHeight = jQuery(document).scrollTop() + window.innerHeight - jQuery(".mcfw-mini-cart-main").height();
         const clickTop = jQuery(this).offset().top;
         const downUp = fullHeight - clickTop;
 
-        if (jQuery(this).hasClass("mcfwp-menu-show")) {
+        if (jQuery(this).hasClass("mcfw-menu-show")) {
             if (downUp < 0) {
-                jQuery(this).closest(".mcfwp-menu").addClass("mcfwp-falyout-open-top");
+                jQuery(this).closest(".mcfw-menu").addClass("mcfw-falyout-open-top");
             } else {
-                if (jQuery(".mcfwp-menu").hasClass("mcfwp-falyout-open-top")) {
-                    jQuery(".mcfwp-menu").removeClass("mcfwp-falyout-open-top");
+                if (jQuery(".mcfw-menu").hasClass("mcfw-falyout-open-top")) {
+                    jQuery(".mcfw-menu").removeClass("mcfw-falyout-open-top");
                 }
             }
         }
     });
 
-    jQuery("body").on("mouseover", ".mcfwp-menu", function () {
-        const fullHeight = jQuery(document).scrollTop() + window.innerHeight - jQuery(".mcfwp-mini-cart-main").height();
+    jQuery("body").on("mouseover", ".mcfw-menu", function () {
+        const fullHeight = jQuery(document).scrollTop() + window.innerHeight - jQuery(".mcfw-mini-cart-main").height();
         const clickTop = jQuery(this).offset().top;
         const downUp = fullHeight - clickTop;
 
         if (downUp < 0) {
-            jQuery(this).closest(".mcfwp-menu").addClass("mcfwp-falyout-open-top");
+            jQuery(this).closest(".mcfw-menu").addClass("mcfw-falyout-open-top");
         } else {
-            if (jQuery(".mcfwp-menu").hasClass("mcfwp-falyout-open-top")) {
-                jQuery(".mcfwp-menu").removeClass("mcfwp-falyout-open-top");
+            if (jQuery(".mcfw-menu").hasClass("mcfw-falyout-open-top")) {
+                jQuery(".mcfw-menu").removeClass("mcfw-falyout-open-top");
             }
         }
     });
 
-    /** Remove Product in cart */
-    var currentRequest = null;
-    jQuery("body").on("click", ".mcfwp-remove-cart-item", function () {
-        var product_id = jQuery(this).attr("data-id");
-        currentRequest = $.ajax({
-            type: "POST",
-            url: mcfwpObj.ajaxurl,
-            data: {
-                action: "mcfwp_remove_cart_iteam",
-                product_id: product_id,
-            },
-            dataType: "text",
-            beforeSend: function () {
-                if (currentRequest != null) {
-                    currentRequest.abort();
-                }
-            },
-            success: function (data) {
-                refresh_cart_fragment();
-            },
-        });
-    });
-
     setTimeout(function () {
         var i = 1;
-        jQuery(".mcfwp-mini-cart-main").each(function () {
-            const fullHeight = jQuery(document).scrollTop() + window.innerHeight - jQuery(".mcfwp-mini-cart-main").height();
+        jQuery(".mcfw-mini-cart-main").each(function () {
+            const fullHeight = jQuery(document).scrollTop() + window.innerHeight - jQuery(".mcfw-mini-cart-main").height();
             const clickTop = jQuery(this).offset().top;
             const downUp = fullHeight - clickTop;
 
             if (downUp < 0) {
-                jQuery(this).closest(".mcfwp-menu").addClass("mcfwp-falyout-open-top");
+                jQuery(this).closest(".mcfw-menu").addClass("mcfw-falyout-open-top");
             }
         });
     }, 1000);
 });
 
 jQuery(document).click(function (event) {
-    var container = jQuery(".mcfwp-mini-cart-main");
-    var container_menu = jQuery(".mcfwp-menu");
+    var container = jQuery(".mcfw-mini-cart-main");
+    var container_menu = jQuery(".mcfw-menu");
     if (!container.is(event.target) && !container.has(event.target).length) {
         if (!container_menu.is(event.target) && !container_menu.has(event.target).length) {
-            jQuery("body .mcfwp-menu").removeClass("mcfwp-menu-show");
+            jQuery("body .mcfw-menu").removeClass("mcfw-menu-show");
         }
     }
 });

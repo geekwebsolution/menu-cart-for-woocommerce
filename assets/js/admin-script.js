@@ -5,32 +5,32 @@ jQuery(document).ready(function ($) {
     });
 
     jQuery(function () {
-        jQuery(".mcfwp-color-field").wpColorPicker();
+        jQuery(".mcfw-color-field").wpColorPicker();
     });
 
-    jQuery(".mcfwp-select").val() == "" ? jQuery(".mcfwp-select-err").fadeIn() : jQuery(".mcfwp-select-err").fadeOut();
+    jQuery(".mcfw-select").val() == "" ? jQuery(".mcfw-select-err").fadeIn() : jQuery(".mcfw-select-err").fadeOut();
 
-    jQuery(".mcfwp-select").on("change", function () {
-        var selectVal = jQuery(".mcfwp-select").val();
-        selectVal == "" ? jQuery(".mcfwp-select-err").fadeIn() : jQuery(".mcfwp-select-err").fadeOut();
+    jQuery(".mcfw-select").on("change", function () {
+        var selectVal = jQuery(".mcfw-select").val();
+        selectVal == "" ? jQuery(".mcfw-select-err").fadeIn() : jQuery(".mcfw-select-err").fadeOut();
     });
 
-    jQuery(".mcfwp-cart-options input[type=radio]").click(function () {
-        jQuery(".mcfwp-cart-options").removeClass("mcfwp-current-cart-options");
-        jQuery(this).parent().addClass("mcfwp-current-cart-options");
+    jQuery(".mcfw-cart-options input[type=radio]").click(function () {
+        jQuery(".mcfw-cart-options").removeClass("mcfw-current-cart-options");
+        jQuery(this).parent().addClass("mcfw-current-cart-options");
     });
 
-    jQuery(".mcfwp-cart-btn-img input[type=radio]").click(function () {
-        jQuery(".mcfwp-cart-btn-img").removeClass("mcfwp-current-cart-options");
-        jQuery(this).parent().addClass("mcfwp-current-cart-options");
+    jQuery(".mcfw-cart-btn-img input[type=radio]").click(function () {
+        jQuery(".mcfw-cart-btn-img").removeClass("mcfw-current-cart-options");
+        jQuery(this).parent().addClass("mcfw-current-cart-options");
     });
 
-    jQuery("body").on("click", ".mcfwp-menu-list", function () {
-        jQuery(".mcfwp-mini-cart-main").addClass("mcfwp-menu-list-open");
+    jQuery("body").on("click", ".mcfw-menu-list", function () {
+        jQuery(".mcfw-mini-cart-main").addClass("mcfw-menu-list-open");
     });
 
     Coloris({
-        el: ".mcfwp_coloris",
+        el: ".mcfw_coloris",
         themeMode: "auto",
         swatches: ["#264653", "#2a9d8f", "#e9c46a", "#f4a261"],
         clearButton: {
@@ -41,18 +41,18 @@ jQuery(document).ready(function ($) {
         selectInput: true,
     });
 
-    jQuery("body").on("click", ".mcfwp-design-setting input[type=reset]", function () {
-        jQuery(".mcfwp-design-setting").find("input[type=text]").val("");
-        jQuery(".mcfwp-design-setting").find(".clr-field").removeAttr("style");
-        jQuery(".mcfwp-design-setting .mcfwp-sticky-cart-shape").val("mcfwp_round_cart").change();
-        jQuery(".mcfwp-design-setting .mcfwp-border-style-select").val("none").change();
-        jQuery(".mcfwp-design-setting .mcfwp-currency-position-select").val("mcfwp_currency_postion_left_withspace").change();
-        jQuery(".mcfwp-design-setting input[type=submit]").click();
+    jQuery("body").on("click", ".mcfw-design-setting input[type=reset]", function () {
+        jQuery(".mcfw-design-setting").find("input[type=text]").val("");
+        jQuery(".mcfw-design-setting").find(".clr-field").removeAttr("style");
+        jQuery(".mcfw-design-setting .mcfw-sticky-cart-shape").val("mcfw_round_cart").change();
+        jQuery(".mcfw-design-setting .mcfw-border-style-select").val("none").change();
+        jQuery(".mcfw-design-setting .mcfw-currency-position-select").val("mcfw_currency_postion_left_withspace").change();
+        jQuery(".mcfw-design-setting input[type=submit]").click();
     });
 
-    jQuery("body").on("click", "#mcfwp_copy_icon", function () {
+    jQuery("body").on("click", "#mcfw_copy_icon", function () {
         console.log("cal..");
-        var copyText = document.getElementById("mcfwp_shortcode_copy");
+        var copyText = document.getElementById("mcfw_shortcode_copy");
 
         var text = copyText.value;
         var sampleTextarea = document.createElement("textarea");
@@ -62,7 +62,7 @@ jQuery(document).ready(function ($) {
         document.execCommand("copy");
         document.body.removeChild(sampleTextarea);
 
-        var tooltip = document.getElementById("mcfwp_shortcodeTooltip");
+        var tooltip = document.getElementById("mcfw_shortcodeTooltip");
         tooltip.innerHTML = "Copied!";
 
         /* Select the text field */
@@ -76,8 +76,16 @@ jQuery(document).ready(function ($) {
         // alert("Copied the text: " + copyText.value);
     });
 
-    jQuery("body #mcfwp_shortcode_copy").mouseout(function () {
-        var tooltip = document.getElementById("mcfwp_shortcodeTooltip");
+    jQuery("body #mcfw_shortcode_copy").mouseout(function () {
+        var tooltip = document.getElementById("mcfw_shortcodeTooltip");
         tooltip.innerHTML = "Copy to clipboard";
+    });
+
+    jQuery("body").on("click", ".mcfw-product-option-ck", function () {
+        if (jQuery(this).hasClass("mcfw-checkbox-disabled")) {
+            jQuery(".mcfw-pro-product-option").css("display", "inline-block");
+        } else {
+            jQuery(".mcfw-pro-product-option").css("display", "none");
+        }
     });
 });
