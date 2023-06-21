@@ -74,7 +74,7 @@ if (!class_exists('mcfw_design_elements_settings')) {
 
             add_settings_field(
                 'menu_count_text_color',
-                __('Menu Text Color <span class="mcfw-pro">pro</span>', 'menu-cart-for-woocommerce'),
+                __('Menu Count Color <span class="mcfw-pro">pro</span>', 'menu-cart-for-woocommerce'),
                 array($this, 'btns_color_picker_callback'),
                 'mcfw_design_setting_section',
                 'mcfw_design_setting_id',
