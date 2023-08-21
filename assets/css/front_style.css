@@ -250,24 +250,24 @@
   visibility: visible;
 }
 
-/* .mcfw_currency_postion_left .mcfw-mini-cart-price-wp {
+.mcfw_currency_postion_left .mcfw-mini-cart-price-wp {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
-} */
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
 
-/* .mcfw_currency_postion_left_withspace .mcfw-mini-cart-price-wp {
+.mcfw_currency_postion_left_withspace .mcfw-mini-cart-price-wp {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
-} */
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
 
 .mcfw_currency_postion_left_withspace
   .mcfw-mini-cart-price-wp
-  .woocommerce-Price-currencySymbol {
-  margin: 0;
+  .mcfw-flyout-currency {
+  margin: 0 4px;
 }
 
 .mcfw-btns {
@@ -276,15 +276,53 @@
 
 .mcfw_currency_postion_right_withspace
   .mcfw-mini-cart-price-wp
+  .mcfw-flyout-currency {
+  margin: 0 4px;
+}
+
+.mcfw_currency_postion_right_withspace
+  .mcfw-mini-cart-price-wp
+  .woocommerce-Price-amount
+  bdi {
+  display: inline-flex !important;
+  flex-direction: row-reverse;
+}
+
+.mcfw_currency_postion_right
+  .mcfw-mini-cart-price-wp
+  .woocommerce-Price-amount
+  bdi {
+  display: inline-flex !important;
+  flex-direction: row-reverse;
+}
+
+.mcfw_currency_postion_right .mcfw-mini-cart-price-wp {
+  display: inline-flex !important;
+  flex-direction: row-reverse;
+}
+
+.mcfw_currency_postion_right_withspace .mcfw-mini-cart-price-wp {
+  display: inline-flex !important;
+  flex-direction: row-reverse;
+}
+
+.mcfw_currency_postion_right_withspace
+  .mcfw-mini-cart-price-wp
   .woocommerce-Price-currencySymbol {
   margin: 0 4px;
 }
 
-.mcfw-mini-product-price-html .mcfw-mini-cart-price-wp {
+.mcfw_currency_postion_left_withspace
+  .mcfw-mini-cart-price-wp
+  .woocommerce-Price-currencySymbol {
+  margin: 0 4px;
+}
+
+/* .mcfw-mini-product-price-html .mcfw-mini-cart-price-wp {
   display: -webkit-inline-box !important;
   display: -ms-inline-flexbox !important;
   display: inline-flex !important;
-}
+} */
 
 .mcfw-svg {
   max-height: 26px;
@@ -389,7 +427,8 @@
 }
 
 @media (max-width: 991px) {
-  .mcfw_for_des, .mcfw-mini-cart-main {
+  .mcfw_for_des,
+  .mcfw-mini-cart-main {
     display: none !important;
   }
   .mcfw_for_mob {

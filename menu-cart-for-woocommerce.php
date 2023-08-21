@@ -3,8 +3,8 @@
 Plugin Name:  Menu Cart For Woocommerce
 Description: Use our best, most professional, an innovative plugin to show your cart to the next level. This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you are.
 Author: Geek Code Lab
-Version: 1.6
-WC tested up to: 7.8.0
+Version: 1.7
+WC tested up to: 8.0.2
 Author URI: https://geekcodelab.com/
 Text Domain : menu-cart-for-woocommerce
 */
@@ -19,7 +19,7 @@ if (!defined("MCFW_PLUGIN_URL"))
 
     define("MCFW_PLUGIN_URL", plugins_url() . '/' . basename(dirname(__FILE__)));
 
-define("mcfw_BUILD", '1.6');
+define("mcfw_BUILD", '1.7');
 
 register_activation_hook(__FILE__, 'mcfw_plugin_active_menu_cart_for_woocommerce');
 function mcfw_plugin_active_menu_cart_for_woocommerce(){
@@ -155,22 +155,18 @@ function mcfw_update_menu_count($fragments){
         default:
             $output .= '' . $items_count . ' '.$item_join_label.' </span>';
             break;
-    } ?>
-  
+    } ?>  
     <span class="mcfw-mini-product-price-html ">
         <?php _e($output); ?>
     </span>
-
     <?php
     $fragments['.mcfw-mini-product-price-html'] = ob_get_clean();
-    
     return $fragments;
 }
 
 /** Flyout HTML Start  */
 add_filter('woocommerce_add_to_cart_fragments', 'mcfw_update_flyout');
 function mcfw_update_flyout($fragments) {
-
     ob_start();
     $mcfw_flyout_options1 = get_option('mcfw_flyout_options');
     $mcfw_general_options1 = get_option('mcfw_general_options');
@@ -178,7 +174,6 @@ function mcfw_update_flyout($fragments) {
     $currency = esc_attr(($mcfw_general_options1['price_format'] == 'currency') ? get_woocommerce_currency() : get_woocommerce_currency_symbol());
 
     if (!empty($mcfw_flyout_options1['flyout_status'])  && ($mcfw_flyout_options1['flyout_status'] == 'on')) {
-
         $allow_pro_image    = isset($mcfw_flyout_options1['product_image']) ? $mcfw_flyout_options1['product_image'] : '' ;
         $allow_pro_name     = isset($mcfw_flyout_options1['product_name']) ? $mcfw_flyout_options1['product_name'] : '' ;
         $allow_pro_price    = isset($mcfw_flyout_options1['product_price']) ? $mcfw_flyout_options1['product_price'] : '' ;
@@ -186,8 +181,7 @@ function mcfw_update_flyout($fragments) {
         $allow_pro_link     = isset($mcfw_flyout_options1['product_link']) ? $mcfw_flyout_options1['product_link'] : '' ;
         $allow_pro_total    = isset($mcfw_flyout_options1['product_total']) ? $mcfw_flyout_options1['product_total'] : '' ;
         $allow_remove_icon  = isset($mcfw_flyout_options1['remove_product_icon']) ? $mcfw_flyout_options1['remove_product_icon'] : '' ;
-        $empty_note_txt     = 'Your Cart Is Currently Empty.';
-        ?>
+        $empty_note_txt     = 'Your Cart Is Currently Empty.'; ?>
         <div class="mcfw-mini-cart-main">
             <?php if ($items_count != 0) { ?>
                 <div class="mcfw-flyout-product-list">
@@ -196,36 +190,33 @@ function mcfw_update_flyout($fragments) {
                     $mcfe_total = (($mcfw_flyout_options1['max_products'] == 'all') ? $items_count : $mcfw_flyout_options1['max_products']);
 
                     foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                        $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+                        $product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
                         if ($i <= $mcfe_total) {
                             $i++;
-                            $product = $cart_item['data'];
-                            $product_id = $cart_item['product_id'];
-                            $product_img = esc_url(get_the_post_thumbnail_url($product_id)); ?>
+                            $product_img = esc_url(get_the_post_thumbnail_url($product_id));
+                            $product_price = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+                            $product_subtotal = apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>
                             <div class="mcfw-flyout-product">
                                 <?php 
                                 if(!empty($allow_pro_image)){
                                     ?>
                                     <div class="mcfw-pro-img">
                                         <?php
-                                        if(!empty($allow_pro_link)){
-                                            ?>
-                                            <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" title="<?php esc_attr_e($product->name); ?>" ><img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($product->name); ?>"></a>
+                                        if(!empty($allow_pro_link)){ ?>
+                                            <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" title="<?php esc_attr_e($_product->name); ?>" ><img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($_product->name); ?>"></a>
                                             <?php
-                                        }else{
-                                            ?>
-                                            <img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($product->name); ?>">
+                                        }else{ ?>
+                                            <img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($_product->name); ?>">
                                             <?php
                                         }
                                         ?>
-                                        
                                     </div>
                                     <?php
-                                }
-                                ?>
+                                } ?>
                                 <div class="mcfw-cart-item-qp">
                                     <?php 
-                                    if(!empty($allow_remove_icon)){
-                                        ?>
+                                    if(!empty($allow_remove_icon)){ ?>
                                         <span data-id="<?php _e($product_id,'menu-cart-for-woocommerce'); ?>" class="mcfw-remove-cart-item">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13.667" viewBox="0 0 13 13.667">
                                                 <g id="Group_1" data-name="Group 1" transform="translate(-2.25 -1.75)">
@@ -241,18 +232,15 @@ function mcfw_update_flyout($fragments) {
                                         <?php
                                     }
                                     if(!empty($allow_pro_name)){
-                                        if(!empty($allow_pro_link)){
-                                            ?>
-                                                <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" class="mcfw-cart-item-name"><?php esc_attr_e($product->name); ?></a>
+                                        if(!empty($allow_pro_link)){ ?>
+                                                <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" class="mcfw-cart-item-name"><?php esc_attr_e($_product->name); ?></a>
                                             <?php
-                                        }else{
-                                            ?>
-                                                <span class="mcfw-cart-item-name"><?php esc_attr_e($product->name); ?></span>
+                                        }else{ ?>
+                                                <span class="mcfw-cart-item-name"><?php esc_attr_e($_product->name); ?></span>
                                             <?php
                                         }
                                     }
-                                    if(!empty($allow_pro_quantity)){
-                                        ?>
+                                    if(!empty($allow_pro_quantity)){ ?>
                                         <span>
                                             <?php esc_attr_e($cart_item['quantity']);
                                             if(!empty($allow_pro_quantity) && !empty($allow_pro_price)){
@@ -263,31 +251,25 @@ function mcfw_update_flyout($fragments) {
                                         <?php
                                     }
                                     
-                                    if(!empty($allow_pro_price)){
-                                        $cart_price = WC()->cart->get_product_price( $product );
-                                        ?>
+                                    if(!empty($allow_pro_price)){ ?>
                                         <span class="mcfw-mini-product-price-html">
                                             <span class="mcfw-mini-cart-price-wp">
-                                                <?php _e( $cart_price ); ?>
+                                                <?php echo $product_price; ?>
                                             </span>
                                         </span>
                                         <?php
-                                        if(!empty($allow_pro_total)){
-                                            ?>
+                                        if(!empty($allow_pro_total)){ ?>
                                             <span>=</span><?php
                                         }
                                     }
-                                    if(!empty($allow_pro_total)){
-                                        ?>
+                                    if(!empty($allow_pro_total)){ ?>
                                         <span class="mcfw-mini-product-price-html ">
                                             <span class="mcfw-flyout-product-total mcfw-mini-cart-price-wp" >
-                                                <span class="mcfw-flyout-currency"><?php esc_attr_e($currency); ?></span>
-                                                <?php esc_attr_e($cart_item['quantity']*$product->price); ?>
+                                                <?php echo $product_subtotal; // PHPCS: XSS ok. ?>
                                             </span>
                                         </span>
                                         <?php
-                                    }
-                                    ?>
+                                    } ?>
                                 </div>
                             </div>
                             <?php
@@ -304,7 +286,7 @@ function mcfw_update_flyout($fragments) {
                         }
                         if ($btns == 'checkout' || $btns == 'cart_checkout') { ?>
                             <a class="btn button mcfw-btns" href="<?php esc_attr_e(wc_get_checkout_url()); ?>"><?php esc_attr_e(!empty($mcfw_flyout_options1['checkout_btn_txt']) ? $mcfw_flyout_options1['checkout_btn_txt'] : 'CheckOut'); ?></a><?php 
-                        }  ?>
+                        } ?>
                     </div>
 
                     <div class="mcfw-cart-btn-wp mcfw_for_mob">
@@ -313,7 +295,7 @@ function mcfw_update_flyout($fragments) {
                         
                         if ($btns == 'checkout' || $btns == 'cart_checkout') { ?>
                             <a class="mcfw-btns" href="<?php esc_attr_e(wc_get_checkout_url()); ?>"><?php esc_attr_e(!empty($mcfw_flyout_options1['checkout_btn_txt']) ? $mcfw_flyout_options1['checkout_btn_txt'] : 'CheckOut'); ?></a><?php 
-                        }  ?>
+                        } ?>
                     </div>
                 <?php } ?>
                 <div class="mcfw-sub-total mcfw-mini-product-price-html">
@@ -371,8 +353,7 @@ function mcfw_update_sticky_count($fragments){
     return $fragments;
 }
 
-function mcfw_custom_content_after_body_open_tag() {
-    ?>
+function mcfw_custom_content_after_body_open_tag() { ?>
     <div class="mcfw-overlay mcfw-hidden"></div>
     <?php
 }
