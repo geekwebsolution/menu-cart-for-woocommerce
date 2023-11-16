@@ -3,8 +3,8 @@
 Plugin Name:  Menu Cart For Woocommerce
 Description: Use our best, most professional, an innovative plugin to show your cart to the next level. This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you are.
 Author: Geek Code Lab
-Version: 1.7
-WC tested up to: 8.0.2
+Version: 1.8
+WC tested up to: 8.2.2
 Author URI: https://geekcodelab.com/
 Text Domain : menu-cart-for-woocommerce
 */
@@ -19,7 +19,7 @@ if (!defined("MCFW_PLUGIN_URL"))
 
     define("MCFW_PLUGIN_URL", plugins_url() . '/' . basename(dirname(__FILE__)));
 
-define("mcfw_BUILD", '1.7');
+define("mcfw_BUILD", '1.8');
 
 register_activation_hook(__FILE__, 'mcfw_plugin_active_menu_cart_for_woocommerce');
 function mcfw_plugin_active_menu_cart_for_woocommerce(){
@@ -353,9 +353,18 @@ function mcfw_update_sticky_count($fragments){
     return $fragments;
 }
 
+add_action('wp_body_open', 'mcfw_custom_content_after_body_open_tag');
 function mcfw_custom_content_after_body_open_tag() { ?>
     <div class="mcfw-overlay mcfw-hidden"></div>
     <?php
 }
 
-add_action('wp_body_open', 'mcfw_custom_content_after_body_open_tag');
+/**
+ * Added HPOS support for woocommerce
+ */
+add_action( 'before_woocommerce_init', 'mcfw_before_woocommerce_init' );
+function mcfw_before_woocommerce_init() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+}
