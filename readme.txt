@@ -5,7 +5,7 @@ Tags: cart, menucart, basket, flyoutcart, flyout, woocommerce
 Requires PHP: 5.2.4
 Requires at least: 3.0.1
 Tested up to: 6.4.1
-WC tested up to: 8.2.2
+WC tested up to: 8.3.0
 Stable tag: 1.8
 License: GPLv2 or later
 

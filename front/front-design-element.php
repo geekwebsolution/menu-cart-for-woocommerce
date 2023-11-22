@@ -17,9 +17,6 @@ if (!class_exists('mcfw_design')) {
         public function mcfw_add_design(){
             global $mcfw_design_options;
             global $mcfw_general_options1;
-
-
-            
       
             $mcfw_cart_shape = $mcfw_design_options['cart_shape'];
             $mcfw_btn_border = explode(",",$mcfw_design_options['btns_border']); ?>

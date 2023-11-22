@@ -4,7 +4,7 @@ Plugin Name:  Menu Cart For Woocommerce
 Description: Use our best, most professional, an innovative plugin to show your cart to the next level. This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you are.
 Author: Geek Code Lab
 Version: 1.8
-WC tested up to: 8.2.2
+WC tested up to: 8.3.0
 Author URI: https://geekcodelab.com/
 Text Domain : menu-cart-for-woocommerce
 */
@@ -23,11 +23,6 @@ define("mcfw_BUILD", '1.8');
 
 register_activation_hook(__FILE__, 'mcfw_plugin_active_menu_cart_for_woocommerce');
 function mcfw_plugin_active_menu_cart_for_woocommerce(){
-
-    if (!class_exists('WooCommerce')) {
-        die('Menu Cart For Woocommerce Plugin can not activate as it requires <b>WooCommerce</b> plugin.');
-    }
-
     if (is_plugin_active( 'menu-cart-for-woocommerce-pro/menu-cart-for-woocommerce-pro.php' ) ) {		
 		deactivate_plugins('menu-cart-for-woocommerce-pro/menu-cart-for-woocommerce-pro.php');
    	} 
@@ -79,6 +74,35 @@ function mcfw_plugin_active_menu_cart_for_woocommerce(){
         update_option('mcfw_design_options', $mcfw_design_defaults_options);
     }
 }
+
+if ( ! function_exists( 'mcfw_install_woocommerce_admin_notice' ) ) {
+	/**
+	 * Trigger an admin notice if WooCommerce is not installed.
+	 */
+	function mcfw_install_woocommerce_admin_notice() {
+		?>
+		<div class="error">
+			<p>
+				<?php
+				// translators: %s is the plugin name.
+				echo esc_html( sprintf( __( '%s is enabled but not effective. It requires WooCommerce in order to work.', 'menu-cart-for-woocommerce' ), 'Menu Cart For Woocommerce' ) );
+				?>
+			</p>
+		</div>
+		<?php
+	}
+}
+
+
+function mcfw_woocommerce_constructor() {
+    // Check WooCommerce installation
+	if ( ! function_exists( 'WC' ) ) {
+		add_action( 'admin_notices', 'mcfw_install_woocommerce_admin_notice' );
+		return;
+	}
+
+}
+add_action( 'plugins_loaded', 'mcfw_woocommerce_constructor' );
 
 require_once(MCFW_PLUGIN_DIR_PATH . 'admin/option.php');
 require_once(MCFW_PLUGIN_DIR_PATH . 'front/index.php');
