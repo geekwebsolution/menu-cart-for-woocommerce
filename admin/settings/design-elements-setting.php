@@ -254,12 +254,7 @@ if (!class_exists('mcfw_design_elements_settings')) {
         public function btns_color_picker_callback($args){
             global $mcfw_design_options;
             $value = isset($mcfw_design_options[$args['label_for']]) ? $mcfw_design_options[$args['label_for']] : ''; ?>
-
-
-
                 <input type="text" class="mcfw_coloris" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php _e($value); ?>" />
-        
-        
             <?php
         }
 
@@ -295,7 +290,6 @@ if (!class_exists('mcfw_design_elements_settings')) {
                 </div>
                 
                 <div class="mcfw-border-color">
-
                     <input type="text" class="mcfw_coloris" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]['color']" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php esc_attr_e($value[2]); ?>" >
                     <p class="mcfw-input-note"><?php _e('This field represents <strong>COLOR</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
@@ -321,62 +315,12 @@ if (!class_exists('mcfw_design_elements_settings')) {
         public function sanitize_settings($input){
             $new_input = array();
 
-            // print_r($input);
-
-            // die;
-
-            if (isset($input['currency_position']) && !empty($input['currency_position'])) {
-                $new_input['currency_position']=sanitize_text_field($input['currency_position']);
-            }
-            
-            if (isset($input['cart_color']) && !empty($input['cart_color'])) {
-                $new_input['cart_color']=sanitize_text_field($input['cart_color']);
-            }
-
-            if (isset($input['menu_txt_color']) && !empty($input['menu_txt_color'])) {
-                $new_input['menu_txt_color']=sanitize_text_field($input['menu_txt_color']);
-            }
-
-            if (isset($input['flyout_background_color']) && !empty($input['flyout_background_color'])) {
-                $new_input['flyout_background_color']=sanitize_text_field($input['flyout_background_color']);
-            }
-
-            if (isset($input['txt_color']) && !empty($input['txt_color'])) {
-                $new_input['txt_color']=sanitize_text_field($input['txt_color']);
-            }
-
-            if (isset($input['btns_background_color']) && !empty($input['btns_background_color'])) {
-                $new_input['btns_background_color']=sanitize_text_field($input['btns_background_color']);
-            }
-
-            if (isset($input['btns_hover_background_color']) && !empty($input['btns_hover_background_color'])) {
-                $new_input['btns_hover_background_color']=sanitize_text_field($input['btns_hover_background_color']);
-            }
-
-            if (isset($input['btns_text_color']) && !empty($input['btns_text_color'])) {
-                $new_input['btns_text_color']=sanitize_text_field($input['btns_text_color']);
-            }
-
-            if (isset($input['btns_hover_text_color']) && !empty($input['btns_hover_text_color'])) {
-                $new_input['btns_hover_text_color']=sanitize_text_field($input['btns_hover_text_color']);
-            }
-
-            if (isset($input['btns_border']) && !empty($input['btns_border'])) {
-                $new_input['btns_border'] = sanitize_text_field(implode(",",$input['btns_border']));
-            }
-
-            if (isset($input['count_text_color']) && !empty($input['count_text_color'])) {
-                $new_input['count_text_color']=sanitize_text_field($input['count_text_color']);
-            }
-            if (isset($input['count_background_color']) && !empty($input['count_background_color'])) {
-                $new_input['count_background_color']=sanitize_text_field($input['count_background_color']);
-            }
-            if (isset($input['cart_background_color']) && !empty($input['cart_background_color'])) {
-                $new_input['cart_background_color']=sanitize_text_field($input['cart_background_color']);
-            }
-            
-            if (isset($input['cart_shape']) && !empty($input['cart_shape'])) {
-                $new_input['cart_shape']=sanitize_text_field($input['cart_shape']);
+            if(isset($input) && !empty($input)) {
+                foreach ($input as $key => $value) {
+                    if (isset($input[$key]) && !empty($input[$key])) {
+                        $new_input[$key] = sanitize_text_field($input[$key]);
+                    }
+                }
             }
             
             return $new_input;

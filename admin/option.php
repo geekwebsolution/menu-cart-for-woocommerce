@@ -129,15 +129,12 @@ if (!class_exists('mcfw_settings')) {
 
                             if ($tab == "mcfw-Pro") {
                                 include(MCFW_PLUGIN_DIR_PATH . 'admin/settings/pro-features.php');
-                            } 
-                            
-                            
-                            ?>
+                            } ?>
                         </div>
                     </div>
                 </div>
             </div>
-<?php
+            <?php
         }
     }
     new mcfw_settings();

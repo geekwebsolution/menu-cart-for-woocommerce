@@ -3,8 +3,8 @@
 Plugin Name:  Menu Cart For Woocommerce
 Description: Use our best, most professional, an innovative plugin to show your cart to the next level. This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you are.
 Author: Geek Code Lab
-Version: 1.8
-WC tested up to: 8.3.0
+Version: 1.9
+WC tested up to: 8.5.2
 Author URI: https://geekcodelab.com/
 Text Domain : menu-cart-for-woocommerce
 */
@@ -19,8 +19,9 @@ if (!defined("MCFW_PLUGIN_URL"))
 
     define("MCFW_PLUGIN_URL", plugins_url() . '/' . basename(dirname(__FILE__)));
 
-define("mcfw_BUILD", '1.8');
+define("mcfw_BUILD", '1.9');
 
+/** Register activation default settings */
 register_activation_hook(__FILE__, 'mcfw_plugin_active_menu_cart_for_woocommerce');
 function mcfw_plugin_active_menu_cart_for_woocommerce(){
     if (is_plugin_active( 'menu-cart-for-woocommerce-pro/menu-cart-for-woocommerce-pro.php' ) ) {		
@@ -75,6 +76,9 @@ function mcfw_plugin_active_menu_cart_for_woocommerce(){
     }
 }
 
+/**
+ * Woocommerce require admin notice
+ */
 if ( ! function_exists( 'mcfw_install_woocommerce_admin_notice' ) ) {
 	/**
 	 * Trigger an admin notice if WooCommerce is not installed.
@@ -85,15 +89,13 @@ if ( ! function_exists( 'mcfw_install_woocommerce_admin_notice' ) ) {
 			<p>
 				<?php
 				// translators: %s is the plugin name.
-				echo esc_html( sprintf( __( '%s is enabled but not effective. It requires WooCommerce in order to work.', 'menu-cart-for-woocommerce' ), 'Menu Cart For Woocommerce' ) );
+				echo esc_html__( sprintf( '%s is enabled but not effective. It requires WooCommerce in order to work.', 'Menu Cart For Woocommerce' ), 'menu-cart-for-woocommerce' );
 				?>
 			</p>
 		</div>
 		<?php
 	}
 }
-
-
 function mcfw_woocommerce_constructor() {
     // Check WooCommerce installation
 	if ( ! function_exists( 'WC' ) ) {
@@ -107,6 +109,7 @@ add_action( 'plugins_loaded', 'mcfw_woocommerce_constructor' );
 require_once(MCFW_PLUGIN_DIR_PATH . 'admin/option.php');
 require_once(MCFW_PLUGIN_DIR_PATH . 'front/index.php');
 
+/** Enqueue admin assets */
 add_action('admin_print_styles', 'mcfw_admin_style');
 function mcfw_admin_style()
 {
@@ -122,6 +125,7 @@ function mcfw_admin_style()
     }
 }
 
+/** Enqueue front assets */
 add_action('wp_enqueue_scripts', 'mcfw_include_front_script');
 function mcfw_include_front_script()
 {
@@ -130,6 +134,7 @@ function mcfw_include_front_script()
     wp_localize_script('mcfw-front-js', 'mcfwObj', ['ajaxurl' => admin_url('admin-ajax.php'), 'general_data' => get_option('mcfw_general_options')]);
 }
 
+/** Plugin setting links */
 function mcfw_plugin_add_settings_link($links)
 {
     $support_link = '<a href="https://geekcodelab.com/contact/"  target="_blank" >' . __('Support') . '</a>';
@@ -142,8 +147,14 @@ function mcfw_plugin_add_settings_link($links)
 $plugin = plugin_basename(__FILE__);
 add_filter("plugin_action_links_$plugin", 'mcfw_plugin_add_settings_link');
 
-/** after page update button text html  */
+/** Menu cart navigation menu filters */
 add_filter('woocommerce_add_to_cart_fragments', 'mcfw_update_menu_count');
+add_filter('woocommerce_add_to_cart_fragments', 'mcfw_update_flyout');
+add_filter('woocommerce_add_to_cart_fragments', 'mcfw_update_sticky_count');
+
+/** 
+ * Menu cart navigation menu html
+ */
 function mcfw_update_menu_count($fragments){
 
     ob_start();
@@ -188,8 +199,9 @@ function mcfw_update_menu_count($fragments){
     return $fragments;
 }
 
-/** Flyout HTML Start  */
-add_filter('woocommerce_add_to_cart_fragments', 'mcfw_update_flyout');
+/**
+ * Menu cart navigation flyout html
+ */
 function mcfw_update_flyout($fragments) {
     ob_start();
     $mcfw_flyout_options1 = get_option('mcfw_flyout_options');
@@ -228,10 +240,10 @@ function mcfw_update_flyout($fragments) {
                                     <div class="mcfw-pro-img">
                                         <?php
                                         if(!empty($allow_pro_link)){ ?>
-                                            <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" title="<?php esc_attr_e($_product->name); ?>" ><img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($_product->name); ?>"></a>
+                                            <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" title="<?php esc_attr_e($_product->get_name()); ?>" ><img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($_product->get_name()); ?>"></a>
                                             <?php
                                         }else{ ?>
-                                            <img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($_product->name); ?>">
+                                            <img src="<?php esc_attr_e($product_img); ?>" alt="" width="70" height="70" alt="<?php esc_attr_e($_product->get_name()); ?>">
                                             <?php
                                         }
                                         ?>
@@ -257,10 +269,10 @@ function mcfw_update_flyout($fragments) {
                                     }
                                     if(!empty($allow_pro_name)){
                                         if(!empty($allow_pro_link)){ ?>
-                                                <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" class="mcfw-cart-item-name"><?php esc_attr_e($_product->name); ?></a>
+                                                <a href="<?php esc_attr_e(get_permalink($product_id)); ?>" class="mcfw-cart-item-name"><?php esc_attr_e($_product->get_name()); ?></a>
                                             <?php
                                         }else{ ?>
-                                                <span class="mcfw-cart-item-name"><?php esc_attr_e($_product->name); ?></span>
+                                                <span class="mcfw-cart-item-name"><?php esc_attr_e($_product->get_name()); ?></span>
                                             <?php
                                         }
                                     }
@@ -359,8 +371,9 @@ function mcfw_update_flyout($fragments) {
     return $fragments;
 }
 
-
-add_filter('woocommerce_add_to_cart_fragments', 'mcfw_update_sticky_count');
+/**
+ * Menu cart sticky button html
+ */
 function mcfw_update_sticky_count($fragments){
     ob_start();
     $mcfw_general_options1 = get_option('mcfw_general_options');
@@ -377,6 +390,9 @@ function mcfw_update_sticky_count($fragments){
     return $fragments;
 }
 
+/**
+ * Overlay of navigation flyout 
+ */
 add_action('wp_body_open', 'mcfw_custom_content_after_body_open_tag');
 function mcfw_custom_content_after_body_open_tag() { ?>
     <div class="mcfw-overlay mcfw-hidden"></div>

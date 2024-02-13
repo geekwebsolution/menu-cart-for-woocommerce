@@ -14,7 +14,7 @@ if (!class_exists('mcfw_general_settings')) {
                 <div class="mcfw-section">
                     <?php
                     if (empty(wp_get_nav_menus())) { ?>
-                        <div class="error mcfw-input-note mcfw-error" >
+                        <div class="error mcfw-input-note mcfw-error">
                             <?php _e('You need to create a menu before you can use Menu Cart. Go to <strong>Appearence > Menus</strong> and create menu to add the cart to.', 'menu-cart-for-woocommerce'); ?>
                         </div>
                     <?php } ?>
@@ -204,7 +204,7 @@ if (!class_exists('mcfw_general_settings')) {
                 ?>
             </div>
   
-            <span class="mcfw-pro-icon"><i><?php _e('Additional icons are only available in') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.') ?></a></i></span>
+            <span class="mcfw-pro-icon"><i><?php _e('Additional icons are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.','menu-cart-for-woocommerce') ?></a></i></span>
             <?php
         }
 
@@ -234,7 +234,7 @@ if (!class_exists('mcfw_general_settings')) {
                 
                 ?>
             </div> 
-            <span class="mcfw-pro-icon"><i><?php _e('Additional design layouts are only available in') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.') ?></a></i></span>
+            <span class="mcfw-pro-icon"><i><?php _e('Additional design layouts are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.','menu-cart-for-woocommerce') ?></a></i></span>
             <?php
         }
 
@@ -247,7 +247,7 @@ if (!class_exists('mcfw_general_settings')) {
                 <?php
                 foreach ($options as $key => $values) { ?>
                     <div class="mcfw_price_main">                        
-                        <label><input type="radio" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked', 'menu-cart-for-woocommerce'); } ?>><?php esc_attr_e($values); ?></label>
+                        <label><input type="radio" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked'); } ?>><?php esc_attr_e($values); ?></label>
                     </div>
                 <?php } ?>
             </div>
