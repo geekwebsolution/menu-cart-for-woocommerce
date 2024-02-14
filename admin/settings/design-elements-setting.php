@@ -229,8 +229,6 @@ if (!class_exists('mcfw_design_elements_settings')) {
                 ]
             );
         }
-        
-
 
         public function currency_position_callback($args){
             global $mcfw_design_options;
@@ -315,15 +313,62 @@ if (!class_exists('mcfw_design_elements_settings')) {
         public function sanitize_settings($input){
             $new_input = array();
 
-            if(isset($input) && !empty($input)) {
-                foreach ($input as $key => $value) {
-                    if (isset($input[$key]) && !empty($input[$key])) {
-                        $new_input[$key] = sanitize_text_field($input[$key]);
-                    }
-                }
+            if (isset($input['currency_position']) && !empty($input['currency_position'])) {
+                $new_input['currency_position']=sanitize_text_field($input['currency_position']);
+            }
+            
+            if (isset($input['cart_color']) && !empty($input['cart_color'])) {
+                $new_input['cart_color']=sanitize_text_field($input['cart_color']);
+            }
+
+            if (isset($input['menu_txt_color']) && !empty($input['menu_txt_color'])) {
+                $new_input['menu_txt_color']=sanitize_text_field($input['menu_txt_color']);
+            }
+
+            if (isset($input['flyout_background_color']) && !empty($input['flyout_background_color'])) {
+                $new_input['flyout_background_color']=sanitize_text_field($input['flyout_background_color']);
+            }
+
+            if (isset($input['txt_color']) && !empty($input['txt_color'])) {
+                $new_input['txt_color']=sanitize_text_field($input['txt_color']);
+            }
+
+            if (isset($input['btns_background_color']) && !empty($input['btns_background_color'])) {
+                $new_input['btns_background_color']=sanitize_text_field($input['btns_background_color']);
+            }
+
+            if (isset($input['btns_hover_background_color']) && !empty($input['btns_hover_background_color'])) {
+                $new_input['btns_hover_background_color']=sanitize_text_field($input['btns_hover_background_color']);
+            }
+
+            if (isset($input['btns_text_color']) && !empty($input['btns_text_color'])) {
+                $new_input['btns_text_color']=sanitize_text_field($input['btns_text_color']);
+            }
+
+            if (isset($input['btns_hover_text_color']) && !empty($input['btns_hover_text_color'])) {
+                $new_input['btns_hover_text_color']=sanitize_text_field($input['btns_hover_text_color']);
+            }
+
+            if (isset($input['btns_border']) && !empty($input['btns_border'])) {
+                $new_input['btns_border'] = sanitize_text_field(implode(",",$input['btns_border']));
+            }
+
+            if (isset($input['count_text_color']) && !empty($input['count_text_color'])) {
+                $new_input['count_text_color']=sanitize_text_field($input['count_text_color']);
+            }
+            if (isset($input['count_background_color']) && !empty($input['count_background_color'])) {
+                $new_input['count_background_color']=sanitize_text_field($input['count_background_color']);
+            }
+            if (isset($input['cart_background_color']) && !empty($input['cart_background_color'])) {
+                $new_input['cart_background_color']=sanitize_text_field($input['cart_background_color']);
+            }
+            
+            if (isset($input['cart_shape']) && !empty($input['cart_shape'])) {
+                $new_input['cart_shape']=sanitize_text_field($input['cart_shape']);
             }
             
             return $new_input;
+
         }
     }
 }
