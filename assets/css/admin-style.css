@@ -743,6 +743,8 @@ label.mcfw-switch input:checked + .mcfw-slider::before {
 
 .mcfw_shortcode_input_wp {
   position: relative;
+  width: 100%;
+  max-width: 530px;
 }
 
 .mcfw_shortcode_input_wp input {

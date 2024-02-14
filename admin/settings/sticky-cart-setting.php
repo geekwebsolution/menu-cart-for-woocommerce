@@ -81,9 +81,9 @@ if (!class_exists('mcfw_sticky_cart_settings')) {
         public function sticky_sidebar_cart_status_callback($args)
         {
             global $mcfw_sticky_cart_options;
-            $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : '';        ?>
+            $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : ''; ?>
             <label class="mcfw-switch">
-                <input type="checkbox" class="mcfw-checkbox" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="on" <?php if ($value == 'on') {_e('checked', 'menu-cart-for-woocommerce'); } ?>>
+                <input type="checkbox" class="mcfw-checkbox" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="on" <?php if ($value == 'on') {_e('checked'); } ?>>
                 <span class="mcfw-slider"></span>
             </label>
         <?php
@@ -102,7 +102,7 @@ if (!class_exists('mcfw_sticky_cart_settings')) {
                 foreach ($options as $key => $values) { ?>
                     <div class="mcfw_price_main">
                         <label>
-                        <input type="radio" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) {_e('checked', 'menu-cart-for-woocommerce');} ?>><?php esc_attr_e($values); ?>
+                        <input type="radio" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) {_e('checked');} ?>><?php esc_attr_e($values); ?>
                         </label>
                     </div>
                 <?php } ?>
@@ -123,7 +123,7 @@ if (!class_exists('mcfw_sticky_cart_settings')) {
             <select name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]">
                 <?php
                 foreach ($options as $key => $values) { ?>
-                    <option value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('selected', 'menu-cart-for-woocommerce'); } ?>><?php esc_attr_e($values); ?></option>
+                    <option value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('selected'); } ?>><?php esc_attr_e($values); ?></option>
                 <?php } ?>
             </select>
             <?php
@@ -143,7 +143,7 @@ if (!class_exists('mcfw_sticky_cart_settings')) {
                 foreach ($options as $key => $values) { ?>
                     <div class="mcfw_price_main">
                        
-                        <label> <input type="radio" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked', 'menu-cart-for-woocommerce'); } ?>><?php esc_attr_e($values); ?></label>
+                        <label> <input type="radio" name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]" value="<?php esc_attr_e($key); ?>" <?php if ($key == $value) { _e('checked'); } ?>><?php esc_attr_e($values); ?></label>
                     </div>
                 <?php } ?>
             </div>

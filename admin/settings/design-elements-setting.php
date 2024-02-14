@@ -229,8 +229,6 @@ if (!class_exists('mcfw_design_elements_settings')) {
                 ]
             );
         }
-        
-
 
         public function currency_position_callback($args){
             global $mcfw_design_options;
@@ -254,12 +252,7 @@ if (!class_exists('mcfw_design_elements_settings')) {
         public function btns_color_picker_callback($args){
             global $mcfw_design_options;
             $value = isset($mcfw_design_options[$args['label_for']]) ? $mcfw_design_options[$args['label_for']] : ''; ?>
-
-
-
                 <input type="text" class="mcfw_coloris" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php _e($value); ?>" />
-        
-        
             <?php
         }
 
@@ -295,7 +288,6 @@ if (!class_exists('mcfw_design_elements_settings')) {
                 </div>
                 
                 <div class="mcfw-border-color">
-
                     <input type="text" class="mcfw_coloris" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]['color']" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php esc_attr_e($value[2]); ?>" >
                     <p class="mcfw-input-note"><?php _e('This field represents <strong>COLOR</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
@@ -320,10 +312,6 @@ if (!class_exists('mcfw_design_elements_settings')) {
         }
         public function sanitize_settings($input){
             $new_input = array();
-
-            // print_r($input);
-
-            // die;
 
             if (isset($input['currency_position']) && !empty($input['currency_position'])) {
                 $new_input['currency_position']=sanitize_text_field($input['currency_position']);
@@ -380,6 +368,7 @@ if (!class_exists('mcfw_design_elements_settings')) {
             }
             
             return $new_input;
+
         }
     }
 }

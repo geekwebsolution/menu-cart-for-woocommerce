@@ -2,11 +2,11 @@
 Contributors: rajkakadiya, rvadhel
 Donate link: https://paypal.me/rvadhel
 Tags: cart, menucart, basket, flyoutcart, flyout, woocommerce
-Requires PHP: 5.2.4
+Requires PHP: 6.4
 Requires at least: 3.0.1
-Tested up to: 6.4.1
-WC tested up to: 8.3.0
-Stable tag: 1.8
+Tested up to: 6.4.2
+WC tested up to: 8.5.2
+Stable tag: 1.9
 License: GPLv2 or later
 
 This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you 
@@ -68,6 +68,9 @@ After active plugin go Woocommerce ->  Menu Cart For Woocommerce
 
 
 == Changelog ==
+= 1.9 =
+ Fixed bugs.
+
 = 1.8 =
  Added woocommerce HPOS support.
  Tested up to 6.4 wordpress version.

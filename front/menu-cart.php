@@ -44,7 +44,7 @@ if (!class_exists('mcfw_menu_cart')) {
                                     $items .= '<div class="mcfw-mini-cart-main"></div>';
                                                 
                                 $items .='</li>';
-                                }   
+                                }
                         }
                     }
                 } 
@@ -52,5 +52,3 @@ if (!class_exists('mcfw_menu_cart')) {
             }
     }
 }
-
-?>
