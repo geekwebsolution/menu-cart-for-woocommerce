@@ -80,11 +80,8 @@ function mcfw_plugin_active_menu_cart_for_woocommerce(){
  * Woocommerce require admin notice
  */
 if ( ! function_exists( 'mcfw_install_woocommerce_admin_notice' ) ) {
-	/**
-	 * Trigger an admin notice if WooCommerce is not installed.
-	 */
-	function mcfw_install_woocommerce_admin_notice() {
-		?>
+	// Trigger an admin notice if WooCommerce is not installed.
+	function mcfw_install_woocommerce_admin_notice() { ?>
 		<div class="error">
 			<p>
 				<?php
@@ -102,7 +99,6 @@ function mcfw_woocommerce_constructor() {
 		add_action( 'admin_notices', 'mcfw_install_woocommerce_admin_notice' );
 		return;
 	}
-
 }
 add_action( 'plugins_loaded', 'mcfw_woocommerce_constructor' );
 
@@ -218,8 +214,10 @@ function mcfw_update_flyout($fragments) {
         $allow_pro_total    = isset($mcfw_flyout_options1['product_total']) ? $mcfw_flyout_options1['product_total'] : '' ;
         $allow_remove_icon  = isset($mcfw_flyout_options1['remove_product_icon']) ? $mcfw_flyout_options1['remove_product_icon'] : '' ;
         $empty_note_txt     = 'Your Cart Is Currently Empty.'; ?>
+
         <div class="mcfw-mini-cart-main">
-            <?php if ($items_count != 0) { ?>
+            <?php 
+            if ($items_count != 0) { ?>
                 <div class="mcfw-flyout-product-list">
                     <?php
                     $i = 1;
@@ -252,7 +250,8 @@ function mcfw_update_flyout($fragments) {
                                 } ?>
                                 <div class="mcfw-cart-item-qp">
                                     <?php 
-                                    if(!empty($allow_remove_icon)){ ?>
+                                    if(!empty($allow_remove_icon)) { 
+                                        ?>
                                         <span data-id="<?php _e($product_id,'menu-cart-for-woocommerce'); ?>" class="mcfw-remove-cart-item">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13.667" viewBox="0 0 13 13.667">
                                                 <g id="Group_1" data-name="Group 1" transform="translate(-2.25 -1.75)">
