@@ -49,7 +49,7 @@ if (!class_exists('mcfw_general_settings')) {
 
             add_settings_field(
                 'always_display',
-                __("Always Display The Cart Menu Item, Even If It's Empty", 'menu-cart-for-woocommerce'),
+                __("Always display cart, even if it's empty", 'menu-cart-for-woocommerce'),
                 array($this, 'checkbox_element_callback'),
                 'mcfw_general_setting_section',
                 'mcfw_general_setting_id',
