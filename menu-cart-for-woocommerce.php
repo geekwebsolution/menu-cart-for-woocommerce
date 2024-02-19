@@ -106,10 +106,10 @@ require_once(MCFW_PLUGIN_DIR_PATH . 'admin/option.php');
 require_once(MCFW_PLUGIN_DIR_PATH . 'front/index.php');
 
 /** Enqueue admin assets */
-add_action('admin_print_styles', 'mcfw_admin_style');
-function mcfw_admin_style()
+add_action('admin_enqueue_scripts', 'mcfw_admin_style');
+function mcfw_admin_style( $hook )
 {
-    if (is_admin()) {
+    if (is_admin() && $hook == 'woocommerce_page_mcfw-option-page' ) {
         $js        =    plugins_url('/assets/js/admin-script.js', __FILE__);
         wp_enqueue_style('mcfw_coloris_style', plugins_url('assets/css/coloris.min.css', __FILE__), '', mcfw_BUILD);
         wp_enqueue_style('mcfw-select2-style', plugins_url('/assets/css/select2.min.css', __FILE__), '', mcfw_BUILD);
