@@ -51,7 +51,6 @@ jQuery(document).ready(function ($) {
     });
 
     jQuery("body").on("click", "#mcfw_copy_icon", function () {
-        console.log("cal..");
         var copyText = document.getElementById("mcfw_shortcode_copy");
 
         var text = copyText.value;

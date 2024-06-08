@@ -274,7 +274,7 @@ if (!class_exists('mcfw_design_elements_settings')) {
 
                 <div class="mcfw-border-number">
                     <input type="number" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] );  ?>]['px']" min="1" value="<?php esc_attr_e($value[0]); ?>">
-                    <p class="mcfw-input-note"><?php _e('This field represents <strong>WIDTH</strong> of the border','menu-cart-for-woocommerce'); ?></p>
+                    <p class="mcfw-input-note"><?php esc_html_e('This field represents <strong>WIDTH</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
 
                 <div class="mcfw-border-style">
@@ -284,12 +284,12 @@ if (!class_exists('mcfw_design_elements_settings')) {
                             <option value="<?php esc_attr_e($values); ?>" <?php if ($values==$value[1]) { _e('selected'); } ?>><?php esc_attr_e($values); ?></option>
                     <?php } ?>
                     </select>
-                    <p class="mcfw-input-note"><?php _e('This field represents <strong>STYLE</strong> of the border','menu-cart-for-woocommerce'); ?></p>
+                    <p class="mcfw-input-note"><?php esc_html_e('This field represents <strong>STYLE</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
                 
                 <div class="mcfw-border-color">
                     <input type="text" class="mcfw_coloris" name="mcfw_design_options[<?php esc_attr_e( $args['label_for'] ); ?>]['color']" id="<?php esc_attr_e( $args['label_for'] ); ?>" value="<?php esc_attr_e($value[2]); ?>" >
-                    <p class="mcfw-input-note"><?php _e('This field represents <strong>COLOR</strong> of the border','menu-cart-for-woocommerce'); ?></p>
+                    <p class="mcfw-input-note"><?php esc_html_e('This field represents <strong>COLOR</strong> of the border','menu-cart-for-woocommerce'); ?></p>
                 </div>
             </div>
             <?php
@@ -368,7 +368,6 @@ if (!class_exists('mcfw_design_elements_settings')) {
             }
             
             return $new_input;
-
         }
     }
 }

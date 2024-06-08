@@ -3,7 +3,7 @@ if (!class_exists('mcfw_sticky_cart')) {
     
     class mcfw_sticky_cart{
         public function __construct() {
-                add_action( 'init', array( $this, 'mcfw_set_sticky_cart' ) );   
+            add_action( 'init', array( $this, 'mcfw_set_sticky_cart' ) );   
         }
         public function mcfw_set_sticky_cart(){
             if (!is_admin()) {

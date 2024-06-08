@@ -15,7 +15,7 @@ if (!class_exists('mcfw_general_settings')) {
                     <?php
                     if (empty(wp_get_nav_menus())) { ?>
                         <div class="error mcfw-input-note mcfw-error">
-                            <?php _e('You need to create a menu before you can use Menu Cart. Go to <strong>Appearence > Menus</strong> and create menu to add the cart to.', 'menu-cart-for-woocommerce'); ?>
+                            <?php echo wp_kses( __('You need to create a menu before you can use Menu Cart. Go to <strong>Appearence > Menus</strong> and create menu to add the cart to.','menu-cart-for-woocommerce'), array( 'strong' => array() ) ); ?>
                         </div>
                     <?php } ?>
                     <?php do_settings_sections('mcfw_general_setting_section'); ?>
@@ -121,7 +121,7 @@ if (!class_exists('mcfw_general_settings')) {
             global $mcfw_general_options;
             $value = isset($mcfw_general_options[$args['label_for']]) ? explode(",", $mcfw_general_options[$args['label_for']]) : '';
             $mcfw_menus = wp_get_nav_menus();
-        ?>
+            ?>
             <select name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>][]" class="mcfw-select js-select2-multi" multiple="multiple">
                 <option value="" disabled></option>
                 <?php
@@ -133,8 +133,8 @@ if (!class_exists('mcfw_general_settings')) {
                 } ?>
             </select>
             <p class="mcfw-select-err mcfw-input-note">
-                <?php _e('The below options will be ineffective if not select any menu.', 'menu-cart-for-woocommerce'); ?></p>
-        <?php
+                <?php esc_html_e('The below options will be ineffective if not select any menu.', 'menu-cart-for-woocommerce'); ?></p>
+            <?php
         }
 
         public function checkbox_element_callback($args){
@@ -160,14 +160,14 @@ if (!class_exists('mcfw_general_settings')) {
                 <div class="mcfw_price_main currency_price">
                     <input type="radio" id="Currency" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="currency" <?php if ($value == 'currency') { _e('checked', 'menu-cart-for-woocommerce'); } ?>>
                     <div class="mcfw-input-note-wp">
-                        <label for="Currency"><?php _e('Currency', 'menu-cart-for-woocommerce'); ?></label>
+                        <label for="Currency"><?php esc_html_e('Currency', 'menu-cart-for-woocommerce'); ?></label>
                         <span class="mcfw-input-note"><?php _e('e.g. USD', 'menu-cart-for-woocommerce'); ?></span>
                     </div>
                 </div>
                 <div class="mcfw_price_main currency_symbol_price">
                     <input type="radio" id="Currency Symbol" name="mcfw_general_options[<?php esc_attr_e($args['label_for']);  ?>]" value="currency_symbol" <?php if ($value == 'currency_symbol') { _e('checked'); } ?>>
                     <div class="mcfw-input-note-wp">
-                        <label for="Currency Symbol"><?php _e('Currency Symbol', 'menu-cart-for-woocommerce'); ?></label>
+                        <label for="Currency Symbol"><?php esc_html_e('Currency Symbol', 'menu-cart-for-woocommerce'); ?></label>
                         <span class="mcfw-input-note"><?php _e('e.g. $', 'menu-cart-for-woocommerce'); ?></span>
                     </div>
                 </div>
@@ -204,7 +204,7 @@ if (!class_exists('mcfw_general_settings')) {
                 ?>
             </div>
   
-            <span class="mcfw-pro-icon"><i><?php _e('Additional icons are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.','menu-cart-for-woocommerce') ?></a></i></span>
+            <span class="mcfw-pro-icon"><i><?php esc_html_e('Additional icons are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro">Menu Cart Pro.</a></i></span>
             <?php
         }
 
@@ -234,7 +234,7 @@ if (!class_exists('mcfw_general_settings')) {
                 
                 ?>
             </div> 
-            <span class="mcfw-pro-icon"><i><?php _e('Additional design layouts are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.','menu-cart-for-woocommerce') ?></a></i></span>
+            <span class="mcfw-pro-icon"><i><?php esc_html_e('Additional design layouts are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro">Menu Cart Pro.</a></i></span>
             <?php
         }
 
@@ -290,7 +290,6 @@ if (!class_exists('mcfw_general_settings')) {
             if (isset($input['page_redirect']) && !empty($input['page_redirect'])) {
                 $new_input['page_redirect'] = sanitize_text_field($input['page_redirect']);
             }
-
 
             return $new_input;
         }
