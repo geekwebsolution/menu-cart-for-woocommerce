@@ -233,7 +233,7 @@ if (!class_exists('mcfw_flyout_settings')) {
             <?php
             if(isset($args['last_option'])){
                 ?>
-                <span class="mcfw-pro-icon mcfw-pro-product-option"><i><?php _e("Additional detail's options are only available in","menu-cart-for-woocommerce") ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.','menu-cart-for-woocommerce') ?></a></i></span>
+                <span class="mcfw-pro-icon mcfw-pro-product-option"><i><?php esc_html_e("Additional detail's options are only available in","menu-cart-for-woocommerce") ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro">Menu Cart Pro.</a></i></span>
                 <?php
             }
         }
@@ -264,8 +264,7 @@ if (!class_exists('mcfw_flyout_settings')) {
             $options = array(
                 'click'          => 'On Menu Click',
                 'hover'         => 'On Menu Hover',
-            );
-     
+            );     
             ?>
             <div class="mcfw_price_wrap">
                 <?php
@@ -309,7 +308,7 @@ if (!class_exists('mcfw_flyout_settings')) {
                 <?php } ?>
                 <option disabled >All</option>
             </select>
-            <span class="mcfw-pro-icon "><i><?php _e('Additional number counters are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.','menu-cart-for-woocommerce') ?></a></i></span>
+            <span class="mcfw-pro-icon "><i><?php esc_html_e('Additional number counters are only available in','menu-cart-for-woocommerce') ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro">Menu Cart Pro.</a></i></span>
         <?php
         }
 
@@ -336,7 +335,7 @@ if (!class_exists('mcfw_flyout_settings')) {
                 <?php }
                  ?>
             </select>
-            <span class="mcfw-pro-icon "><i><?php _e("Additional button’s options are only available in","menu-cart-for-woocommerce") ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro"><?php _e('Menu Cart Pro.','menu-cart-for-woocommerce') ?></a></i></span>
+            <span class="mcfw-pro-icon "><i><?php esc_html_e("Additional button’s options are only available in","menu-cart-for-woocommerce") ?> <a href="https://geekcodelab.com/wordpress-plugins/menu-cart-for-woocommerce-pro/" target="_blank" title="Buy Menu Cart For Woocommerce Pro">Menu Cart Pro.</a></i></span>
         <?php
         }
 

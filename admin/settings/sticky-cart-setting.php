@@ -115,10 +115,10 @@ if (!class_exists('mcfw_sticky_cart_settings')) {
             global $mcfw_sticky_cart_options;
             $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : '';
             $options = array(
-                'mcfw_cart_top_left'        => 'Top Left',
-                'mcfw_cart_top_right'       => 'Top Right',
-                'mcfw_cart_bottom_left'     => 'Bottom Left',
-                'mcfw_cart_bottom_right'    => 'Bottom Right',
+                'mcfw_cart_top_left'        => __('Top Left','menu-cart-for-woocommerce'),
+                'mcfw_cart_top_right'       => __('Top Right','menu-cart-for-woocommerce'),
+                'mcfw_cart_bottom_left'     => __('Bottom Left','menu-cart-for-woocommerce'),
+                'mcfw_cart_bottom_right'    => __('Bottom Right','menu-cart-for-woocommerce'),
             ); ?>
             <select name="mcfw_sticky_cart_options[<?php esc_attr_e($args['label_for']);  ?>]">
                 <?php
@@ -134,9 +134,9 @@ if (!class_exists('mcfw_sticky_cart_settings')) {
             global $mcfw_sticky_cart_options;
             $value = isset($mcfw_sticky_cart_options[$args['label_for']]) ? $mcfw_sticky_cart_options[$args['label_for']] : 'none';
             $options = array(
-                'cart'      => 'Cart',
-                'checkout'  => 'Checkout',
-                'none'      => 'None',
+                'cart'      => __('Cart','menu-cart-for-woocommerce'),
+                'checkout'  => __('Checkout','menu-cart-for-woocommerce'),
+                'none'      => __('None','menu-cart-for-woocommerce'),
             ); ?>
             <div class="mcfw_price_wrap">
                 <?php

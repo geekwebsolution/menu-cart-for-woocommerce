@@ -6,7 +6,7 @@ if (!class_exists('mcfw_design')) {
 
     class mcfw_design{
         public function __construct() {
-                add_action( 'init', array( $this, 'mcfw_set_design' ) );   
+            add_action( 'init', array( $this, 'mcfw_set_design' ) );   
         }
         public function mcfw_set_design(){
             if (!is_admin()) {

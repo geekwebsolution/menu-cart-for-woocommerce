@@ -54,82 +54,85 @@ if (!class_exists('mcfw_settings')) {
         {
             $default_tab = null;
             $tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : $default_tab; ?>
-            <div class="mcfw-main-box">
-                <div class="mcfw-container">
-                    <div class="mcfw-header">
-                        <h1 class="mcfwp-h1"> <?php _e('Menu Cart For WooCommerce', 'menu-cart-for-woocommerce'); ?></h1>
-                    </div>
-                    <div class="mcfw-option-section">
-                        <div class="mcfw-sidebar">
-                            <ul class="mcfw-tab-list">
-                                <li>
-                                    <a href="?page=mcfw-option-page" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>">
-                                        <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/gear.png'); ?>" alt=""></span>
-                                        <?php _e('General Settings', 'menu-cart-for-woocommerce'); ?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="?page=mcfw-option-page&tab=mcfw-flyout" class="nav-tab <?php if ($tab === 'mcfw-flyout') : ?>nav-tab-active<?php endif; ?>">
-                                        <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/web-browser.png'); ?>" alt=""></span>
-                                        <?php _e('Flyout Settings', 'menu-cart-for-woocommerce'); ?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="?page=mcfw-option-page&tab=mcfw-sticky-cart" class="nav-tab <?php if ($tab === 'mcfw-sticky-cart') : ?>nav-tab-active<?php endif; ?>">
-                                        <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/add-to-cart.png'); ?>" alt=""></span>
-                                        <?php _e('Sticky Cart Settings', 'menu-cart-for-woocommerce'); ?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="?page=mcfw-option-page&tab=mcfw-design-elements" class="nav-tab <?php if ($tab === 'mcfw-design-elements') : ?>nav-tab-active<?php endif; ?>">
-                                        <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/color-palette.png'); ?>" alt=""></span>
-                                        <?php _e('Design Elements', 'menu-cart-for-woocommerce'); ?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="?page=mcfw-option-page&tab=mcfw-shortcode" class="nav-tab <?php if ($tab === 'mcfw-shortcode') : ?>nav-tab-active<?php endif; ?>">
-                                        <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/coding.png'); ?>" alt=""></span>
-                                        <?php _e('Shortcode&nbsp<span class="mcfw-pro-features">Pro!</span>', 'menu-cart-for-woocommerce'); ?>
-                                    </a>
-                                </li>
-                                <li>
-                                        <a href="?page=mcfw-option-page&tab=mcfw-Pro" class="nav-tab mcfw-Pro-tab <?php if ($tab === 'mcfw-Pro') : ?>nav-tab-active<?php endif; ?>">
-                                            <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/crown.png'); ?>" alt=""></span>
-                                            <?php _e('Get Pro Version', 'menu-cart-for-woocommerce'); ?>
+            <div class="wrap">
+                <?php settings_errors(); ?>
+                <div class="mcfw-main-box">
+                    <div class="mcfw-container">
+                        <div class="mcfw-header">
+                            <h1 class="mcfwp-h1">Menu Cart For WooCommerce</h1>
+                        </div>
+                        <div class="mcfw-option-section">
+                            <div class="mcfw-sidebar">
+                                <ul class="mcfw-tab-list">
+                                    <li>
+                                        <a href="?page=mcfw-option-page" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>">
+                                            <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/gear.png'); ?>" alt="gear image"></span>
+                                            <?php esc_html_e('General Settings', 'menu-cart-for-woocommerce'); ?>
                                         </a>
                                     </li>
-                            </ul>
-                        </div>
+                                    <li>
+                                        <a href="?page=mcfw-option-page&tab=mcfw-flyout" class="nav-tab <?php if ($tab === 'mcfw-flyout') : ?>nav-tab-active<?php endif; ?>">
+                                            <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/web-browser.png'); ?>" alt=""></span>
+                                            <?php esc_html_e('Flyout Settings', 'menu-cart-for-woocommerce'); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="?page=mcfw-option-page&tab=mcfw-sticky-cart" class="nav-tab <?php if ($tab === 'mcfw-sticky-cart') : ?>nav-tab-active<?php endif; ?>">
+                                            <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/add-to-cart.png'); ?>" alt=""></span>
+                                            <?php esc_html_e('Sticky Cart Settings', 'menu-cart-for-woocommerce'); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="?page=mcfw-option-page&tab=mcfw-design-elements" class="nav-tab <?php if ($tab === 'mcfw-design-elements') : ?>nav-tab-active<?php endif; ?>">
+                                            <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/color-palette.png'); ?>" alt=""></span>
+                                            <?php esc_html_e('Design Elements', 'menu-cart-for-woocommerce'); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="?page=mcfw-option-page&tab=mcfw-shortcode" class="nav-tab <?php if ($tab === 'mcfw-shortcode') : ?>nav-tab-active<?php endif; ?>">
+                                            <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/coding.png'); ?>" alt=""></span>
+                                            <?php _e('Shortcode&nbsp<span class="mcfw-pro-features">Pro!</span>', 'menu-cart-for-woocommerce'); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                            <a href="?page=mcfw-option-page&tab=mcfw-Pro" class="nav-tab mcfw-Pro-tab <?php if ($tab === 'mcfw-Pro') : ?>nav-tab-active<?php endif; ?>">
+                                                <span><img src="<?php _e(MCFW_PLUGIN_URL . '/assets/images/crown.png'); ?>" alt=""></span>
+                                                <?php esc_html_e('Get Pro Version', 'menu-cart-for-woocommerce'); ?>
+                                            </a>
+                                        </li>
+                                </ul>
+                            </div>
 
-                        <div class="mcfw-tabing-option">
-                            <?php if ($tab == null) {
-                                $general  = new mcfw_general_settings();
-                                $general->register_settings_init();
-                            }
+                            <div class="mcfw-tabing-option">
+                                <?php if ($tab == null) {
+                                    $general  = new mcfw_general_settings();
+                                    $general->register_settings_init();
+                                }
 
-                            if ($tab == "mcfw-flyout") {
-                                $flyout  = new mcfw_flyout_settings();
-                                $flyout->register_flyout_design_settings_init();
-                            }
+                                if ($tab == "mcfw-flyout") {
+                                    $flyout  = new mcfw_flyout_settings();
+                                    $flyout->register_flyout_design_settings_init();
+                                }
 
-                            if ($tab == "mcfw-sticky-cart") {
-                                $sticky  = new mcfw_sticky_cart_settings();
-                                $sticky->register_cart_settings_init();
-                            }
+                                if ($tab == "mcfw-sticky-cart") {
+                                    $sticky  = new mcfw_sticky_cart_settings();
+                                    $sticky->register_cart_settings_init();
+                                }
 
-                            if ($tab == "mcfw-design-elements") {
-                                $design  = new mcfw_design_elements_settings();
-                                $design->design_elements_setting_form_option();
-                            } 
+                                if ($tab == "mcfw-design-elements") {
+                                    $design  = new mcfw_design_elements_settings();
+                                    $design->design_elements_setting_form_option();
+                                } 
 
-                            if ($tab == "mcfw-shortcode") {
-                                $design  = new mcfw_shortcode_settings();
-                                $design->shortcode_setting_form_option();
-                            } 
+                                if ($tab == "mcfw-shortcode") {
+                                    $design  = new mcfw_shortcode_settings();
+                                    $design->shortcode_setting_form_option();
+                                } 
 
-                            if ($tab == "mcfw-Pro") {
-                                include(MCFW_PLUGIN_DIR_PATH . 'admin/settings/pro-features.php');
-                            } ?>
+                                if ($tab == "mcfw-Pro") {
+                                    include(MCFW_PLUGIN_DIR_PATH . 'admin/settings/pro-features.php');
+                                } ?>
+                            </div>
                         </div>
                     </div>
                 </div>

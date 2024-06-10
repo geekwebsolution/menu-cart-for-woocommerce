@@ -1,10 +1,11 @@
 <?php
 /*
-Plugin Name:  Menu Cart For Woocommerce
+Plugin Name: Menu Cart For Woocommerce
 Description: Use our best, most professional, an innovative plugin to show your cart to the next level. This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you are.
 Author: Geek Code Lab
-Version: 1.9
-WC tested up to: 8.5.2
+Version: 1.9.1
+WC tested up to: 8.9.0
+Requires Plugins: woocommerce
 Author URI: https://geekcodelab.com/
 Text Domain : menu-cart-for-woocommerce
 */
@@ -19,7 +20,7 @@ if (!defined("MCFW_PLUGIN_URL"))
 
     define("MCFW_PLUGIN_URL", plugins_url() . '/' . basename(dirname(__FILE__)));
 
-define("mcfw_BUILD", '1.9');
+define("MCFW_BUILD", '1.9.1');
 
 /** Register activation default settings */
 register_activation_hook(__FILE__, 'mcfw_plugin_active_menu_cart_for_woocommerce');
@@ -76,32 +77,6 @@ function mcfw_plugin_active_menu_cart_for_woocommerce(){
     }
 }
 
-/**
- * Woocommerce require admin notice
- */
-if ( ! function_exists( 'mcfw_install_woocommerce_admin_notice' ) ) {
-	// Trigger an admin notice if WooCommerce is not installed.
-	function mcfw_install_woocommerce_admin_notice() { ?>
-		<div class="error">
-			<p>
-				<?php
-				// translators: %s is the plugin name.
-				echo esc_html__( sprintf( '%s is enabled but not effective. It requires WooCommerce in order to work.', 'Menu Cart For Woocommerce' ), 'menu-cart-for-woocommerce' );
-				?>
-			</p>
-		</div>
-		<?php
-	}
-}
-function mcfw_woocommerce_constructor() {
-    // Check WooCommerce installation
-	if ( ! function_exists( 'WC' ) ) {
-		add_action( 'admin_notices', 'mcfw_install_woocommerce_admin_notice' );
-		return;
-	}
-}
-add_action( 'plugins_loaded', 'mcfw_woocommerce_constructor' );
-
 require_once(MCFW_PLUGIN_DIR_PATH . 'admin/option.php');
 require_once(MCFW_PLUGIN_DIR_PATH . 'front/index.php');
 
@@ -111,13 +86,13 @@ function mcfw_admin_style( $hook )
 {
     if (is_admin() && $hook == 'woocommerce_page_mcfw-option-page' ) {
         $js        =    plugins_url('/assets/js/admin-script.js', __FILE__);
-        wp_enqueue_style('mcfw_coloris_style', plugins_url('assets/css/coloris.min.css', __FILE__), '', mcfw_BUILD);
-        wp_enqueue_style('mcfw-select2-style', plugins_url('/assets/css/select2.min.css', __FILE__), '', mcfw_BUILD);
-        wp_enqueue_style('mcfw_admin_style', plugins_url('assets/css/admin-style.css', __FILE__), '', mcfw_BUILD);
+        wp_enqueue_style('mcfw_coloris_style', plugins_url('assets/css/coloris.min.css', __FILE__), '', MCFW_BUILD);
+        wp_enqueue_style('mcfw-select2-style', plugins_url('/assets/css/select2.min.css', __FILE__), '', MCFW_BUILD);
+        wp_enqueue_style('mcfw_admin_style', plugins_url('assets/css/admin-style.css', __FILE__), '', MCFW_BUILD);
 
-        wp_enqueue_script('mcfw-admin-select2-js', plugins_url('/assets/js/select2.min.js', __FILE__), array('jquery'), mcfw_BUILD);
-        wp_enqueue_script('mcfw-admin-coloris-js', plugins_url('/assets/js/coloris.min.js', __FILE__), array('jquery'), mcfw_BUILD);
-        wp_enqueue_script('mcfw_admin_js',  plugins_url('/assets/js/admin-script.js', __FILE__), array('jquery', 'wp-color-picker'), mcfw_BUILD);
+        wp_enqueue_script('mcfw-admin-select2-js', plugins_url('/assets/js/select2.min.js', __FILE__), array('jquery'), MCFW_BUILD);
+        wp_enqueue_script('mcfw-admin-coloris-js', plugins_url('/assets/js/coloris.min.js', __FILE__), array('jquery'), MCFW_BUILD);
+        wp_enqueue_script('mcfw_admin_js',  plugins_url('/assets/js/admin-script.js', __FILE__), array('jquery', 'wp-color-picker'), MCFW_BUILD);
     }
 }
 
@@ -125,18 +100,18 @@ function mcfw_admin_style( $hook )
 add_action('wp_enqueue_scripts', 'mcfw_include_front_script');
 function mcfw_include_front_script()
 {
-    wp_enqueue_style("mcfw_front_style", plugins_url("/assets/css/front_style.css", __FILE__), '', mcfw_BUILD);
-    wp_enqueue_script('mcfw-front-js', plugins_url('/assets/js/front-script.js', __FILE__), array('jquery'), mcfw_BUILD);
+    wp_enqueue_style("mcfw_front_style", plugins_url("/assets/css/front_style.css", __FILE__), '', MCFW_BUILD);
+    wp_enqueue_script('mcfw-front-js', plugins_url('/assets/js/front-script.js', __FILE__), array('jquery'), MCFW_BUILD);
     wp_localize_script('mcfw-front-js', 'mcfwObj', ['ajaxurl' => admin_url('admin-ajax.php'), 'general_data' => get_option('mcfw_general_options')]);
 }
 
 /** Plugin setting links */
 function mcfw_plugin_add_settings_link($links)
 {
-    $support_link = '<a href="https://geekcodelab.com/contact/"  target="_blank" >' . __('Support') . '</a>';
+    $support_link = '<a href="https://geekcodelab.com/contact/"  target="_blank" >' . __('Support','menu-cart-for-woocommerce') . '</a>';
     array_unshift($links, $support_link);
 
-    $settings_link = '<a href="admin.php?page=mcfw-option-page">' . __('Settings') . '</a>';
+    $settings_link = '<a href="admin.php?page=mcfw-option-page">' . __('Settings','menu-cart-for-woocommerce') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
@@ -173,7 +148,7 @@ function mcfw_update_menu_count($fragments){
     $item_join_label = ((isset($items_count)) && ($items_count > 1)) ? 'items' : 'item' ;
     $mcfw_currency_class =  (isset($mcfw_design_options['currency_position']) ? $mcfw_design_options['currency_position'] : ''); 
     
-    $price_currency = '<span class="mcfw-mini-cart-price-wp"><span  class="mcfw-flyout-currency">' . $currency . '</span>'.$menu_price . '</span>';
+    $price_currency = '<span class="mcfw-mini-cart-price-wp"><span class="mcfw-flyout-currency">' . $currency . '</span>'.$menu_price . '</span>';
     switch ($menu_cart_formats) {
         case 'icon_only':
             $output .= '';
@@ -362,7 +337,7 @@ function mcfw_update_flyout($fragments) {
 
             <?php
             } else { ?>
-                <p class="mcfw-empty-note"><?php _e($empty_note_txt, 'menu-cart-for-woocommerce'); ?></p>
+                <p class="mcfw-empty-note"><?php esc_html_e($empty_note_txt); ?></p>
             <?php } ?>
         </div>
     <?php  }
