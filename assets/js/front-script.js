@@ -1,42 +1,46 @@
 jQuery(document).ready(function ($) {
-    setTimeout(refresh_cart_fragment, 1000);
+    if(typeof wc_add_to_cart_params !== "undefined") {
+        setTimeout(refresh_cart_fragment, 1000);
 
-    var $supports_html5_storage = true,
-        cart_hash_key = wc_add_to_cart_params.cart_hash_key;
+        var $supports_html5_storage = true;
 
-    var $fragment_refresh = {
-        url: wc_add_to_cart_params.wc_ajax_url.toString().replace("%%endpoint%%", "get_refreshed_fragments"),
-        type: "POST",
-        data: {
-            time: new Date().getTime(),
-        },
-        timeout: wc_add_to_cart_params.request_timeout,
-        success: function (data) {
-            if (data && data.fragments) {
-                $.each(data.fragments, function (key, value) {
-                    $(key).replaceWith(value);
-                });
+        var $fragment_refresh = {
+            url: wc_add_to_cart_params.wc_ajax_url.toString().replace("%%endpoint%%", "get_refreshed_fragments"),
+            type: "POST",
+            data: {
+                time: new Date().getTime(),
+            },
+            timeout: wc_add_to_cart_params.request_timeout,
+            success: function (data) {
+                if (data && data.fragments) {
+                    $.each(data.fragments, function (key, value) {
+                        $(key).replaceWith(value);
+                    });
 
-                if ($supports_html5_storage) {
-                    sessionStorage.setItem(wc_add_to_cart_params.fragment_name, JSON.stringify(data.fragments));
+                    if ($supports_html5_storage) {
+                        sessionStorage.setItem(wc_add_to_cart_params.fragment_name, JSON.stringify(data.fragments));
+                    }
+
+                    $(document.body).trigger("wc_fragments_refreshed");
                 }
+            },
+        };
 
-                $(document.body).trigger("wc_fragments_refreshed");
-            }
-        },
-    };
-
-    /* Named callback for refreshing cart fragment */
-    function refresh_cart_fragment() {
-        $.ajax($fragment_refresh);
-    }
-    jQuery(document.body).on("wc_cart_emptied", empty_cart);
-
-    function empty_cart(params) {
-        if (mcfwObj.general_data["always_display"] != "on") {
-            jQuery(".mcfw-menu").hide();
+        /* Named callback for refreshing cart fragment */
+        function refresh_cart_fragment() {
+            $.ajax($fragment_refresh);
         }
     }
+
+    if(typeof mcfwObj !== "undefined") {
+        jQuery(document.body).on("wc_cart_emptied", empty_cart);
+        function empty_cart(params) {
+            if (mcfwObj.general_data["always_display"] != "on") {
+                jQuery(".mcfw-menu").hide();
+            }
+        }
+    }
+    
     jQuery("body").on("added_to_cart", function () {
         jQuery(".mcfw-menu").show();
     });

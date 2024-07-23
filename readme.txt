@@ -2,10 +2,10 @@
 Contributors: rajkakadiya, rvadhel
 Donate link: https://paypal.me/rvadhel
 Tags: cart, menucart, basket, flyoutcart, flyout, woocommerce
-Requires PHP: 6.4
-Requires at least: 3.0.1
-Tested up to: 6.4.2
-WC tested up to: 8.9.0
+Requires PHP: 7.4
+Requires at least: 6.0
+Tested up to: 6.5
+WC tested up to: 9.1.2
 Requires Plugins: woocommerce
 Stable tag: 1.9.1
 License: GPLv2 or later
@@ -70,6 +70,7 @@ After active plugin go Woocommerce ->  Menu Cart For Woocommerce
 
 == Changelog ==
  = 1.9.1 =
+ Fixed wc cart fragment bug
  Fixed translation bugs
 
 = 1.9 =
