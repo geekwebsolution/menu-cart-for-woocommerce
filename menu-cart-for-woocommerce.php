@@ -3,8 +3,8 @@
 Plugin Name: Menu Cart For Woocommerce
 Description: Use our best, most professional, an innovative plugin to show your cart to the next level. This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you are.
 Author: Geek Code Lab
-Version: 1.9.1
-WC tested up to: 9.1.2
+Version: 1.9.2
+WC tested up to: 9.2.3
 Requires Plugins: woocommerce
 Author URI: https://geekcodelab.com/
 Text Domain : menu-cart-for-woocommerce
@@ -20,7 +20,7 @@ if (!defined("MCFW_PLUGIN_URL"))
 
     define("MCFW_PLUGIN_URL", plugins_url() . '/' . basename(dirname(__FILE__)));
 
-define("MCFW_BUILD", '1.9.1');
+define("MCFW_BUILD", '1.9.2');
 
 /** Register activation default settings */
 register_activation_hook(__FILE__, 'mcfw_plugin_active_menu_cart_for_woocommerce');
