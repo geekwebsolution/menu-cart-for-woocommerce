@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
         jQuery(document.body).on("wc_cart_emptied", empty_cart);
         function empty_cart(params) {
             if (mcfwObj.general_data["always_display"] != "on") {
-                jQuery(".mcfw-menu").hide();
+                jQuery(".mcfw-menu:visible").hide();
             }
         }
     }
