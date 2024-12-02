@@ -3,7 +3,7 @@
 Plugin Name: Menu Cart For Woocommerce
 Description: Use our best, most professional, an innovative plugin to show your cart to the next level. This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you are.
 Author: Geek Code Lab
-Version: 1.9.2
+Version: 2.0.0
 WC tested up to: 9.2.3
 Requires Plugins: woocommerce
 Author URI: https://geekcodelab.com/
@@ -13,18 +13,25 @@ Text Domain : menu-cart-for-woocommerce
 if (!defined('ABSPATH')) exit;
 
 if (!defined("MCFW_PLUGIN_DIR_PATH"))
-
     define("MCFW_PLUGIN_DIR_PATH", plugin_dir_path(__FILE__));
 
 if (!defined("MCFW_PLUGIN_URL"))
-
     define("MCFW_PLUGIN_URL", plugins_url() . '/' . basename(dirname(__FILE__)));
 
-define("MCFW_BUILD", '1.9.2');
+if (!defined("MCFW_PLUGIN_BASENAME"))
+    define("MCFW_PLUGIN_BASENAME", plugin_basename(__FILE__));
+
+if (!defined("MCFW_PLUGIN_DIR"))
+    define("MCFW_PLUGIN_DIR", plugin_basename(__DIR__));
+
+define("MCFW_BUILD", '2.0.0');
+
+require(MCFW_PLUGIN_DIR_PATH . 'updater/updater.php');
 
 /** Register activation default settings */
 register_activation_hook(__FILE__, 'mcfw_plugin_active_menu_cart_for_woocommerce');
 function mcfw_plugin_active_menu_cart_for_woocommerce(){
+    mcfw_updater_activate();
     if (is_plugin_active( 'menu-cart-for-woocommerce-pro/menu-cart-for-woocommerce-pro.php' ) ) {		
 		deactivate_plugins('menu-cart-for-woocommerce-pro/menu-cart-for-woocommerce-pro.php');
    	} 
@@ -76,6 +83,9 @@ function mcfw_plugin_active_menu_cart_for_woocommerce(){
         update_option('mcfw_design_options', $mcfw_design_defaults_options);
     }
 }
+
+add_action('upgrader_process_complete', 'mcfw_updater_activate'); // remove  transient  on plugin  update
+
 
 require_once(MCFW_PLUGIN_DIR_PATH . 'admin/option.php');
 require_once(MCFW_PLUGIN_DIR_PATH . 'front/index.php');

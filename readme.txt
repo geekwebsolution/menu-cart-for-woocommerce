@@ -7,7 +7,7 @@ Requires at least: 6.0
 Tested up to: 6.5
 WC tested up to: 9.2.3
 Requires Plugins: woocommerce
-Stable tag: 1.9.2
+Stable tag: 2.0.0
 License: GPLv2 or later
 
 This plugin allows you to show your cart details on the menu. There is no need to go on the cart page; it lets you see your cart detail wherever you 
