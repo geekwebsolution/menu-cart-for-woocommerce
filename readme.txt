@@ -69,6 +69,11 @@ After active plugin go Woocommerce ->  Menu Cart For Woocommerce
 
 
 == Changelog ==
+
+= 2.0.0 =
+ Fix Bug
+ Added auto updated function
+
 = 1.9.2 =
  Fixed hide menu cart blink when cart is empty
 
